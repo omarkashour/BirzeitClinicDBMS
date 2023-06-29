@@ -107,7 +107,10 @@ public class Main extends Application {
         root.setStyle("-fx-background-color: #FCAEAE;");
 
         root.setTop(logoBtn);
-
+        Button closeBtn = new Button("X");
+        closeBtn.setOnAction(e->{
+        	primaryStage.close();
+        });
         Scene scene = new Scene(root,1300,750);
 
         DashBoard dashboard = new DashBoard(primaryStage,scene);

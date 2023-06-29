@@ -68,8 +68,6 @@ public class PatientsTab extends BorderPane {
 		 tableVB.setSpacing(10);
 		 titleL.setAlignment(Pos.CENTER);
 		 tableVB.setAlignment(Pos.CENTER);
-//		 setRight(tableVB);
-//		 setMargin(tv, new Insets(15));
 		 
 		 editOrViewPatientsTable.setOnAction(e->{
 			 Stage popupStage = new Stage();
