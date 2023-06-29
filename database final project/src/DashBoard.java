@@ -8,6 +8,7 @@ import java.util.Calendar;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.Side;
 import javafx.scene.Scene;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
@@ -112,6 +113,10 @@ public class DashBoard extends BorderPane {
 		yAxis.setLabel("Number of Visits");
 		yAxis.setTickUnit(1);
 		
+        chart.setStyle("-fx-font-size: 20px;"); 
+        yAxis.setStyle("-fx-font-size: 20px;"); 
+        xAxis.setStyle("-fx-font-size: 20px;"); 
+        
 		// Create data series for female visits
 		XYChart.Series<String, Number> femaleSeries = new XYChart.Series<>();
 		femaleSeries.setName("Female");
@@ -119,6 +124,9 @@ public class DashBoard extends BorderPane {
 
 		XYChart.Series<String, Number> maleSeries = new XYChart.Series<>();
 		maleSeries.setName("Male");
+		
+		XYChart.Series<String, Number> totalSeries = new XYChart.Series<>();
+		totalSeries.setName("Total Visits");
 
 		// Populate the female data series with sample data (replace with your own data)
 		int femaleCount = 0;
@@ -150,12 +158,17 @@ public class DashBoard extends BorderPane {
 				maleCount = resultSet2.getInt(1);
 			}
 			maleSeries.getData().add(new XYChart.Data<>(months[i], maleCount));
+			totalSeries.getData().add(new XYChart.Data<>(months[i], maleCount + femaleCount));
 		}
 
 		// Add the data series to the chart
 		chart.getData().add(femaleSeries);
 		chart.getData().add(maleSeries);
-
+		chart.getData().add(totalSeries);
+        chart.lookup(".chart-title").setStyle("-fx-font-size: 18px; "); // Set title color
+        xAxis.lookup(".axis-label").setStyle("-fx-font-size: 18px;"); // Set X-axis title font size
+        yAxis.lookup(".axis-label").setStyle("-fx-font-size: 18px;"); // Set X-axis title font size
+        chart.setLegendSide(Side.BOTTOM);
 		return chart;
 	}
 
