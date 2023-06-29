@@ -168,6 +168,7 @@ public class DashBoard extends BorderPane {
         chart.lookup(".chart-title").setStyle("-fx-font-size: 18px; "); // Set title color
         xAxis.lookup(".axis-label").setStyle("-fx-font-size: 18px;"); // Set X-axis title font size
         yAxis.lookup(".axis-label").setStyle("-fx-font-size: 18px;"); // Set X-axis title font size
+        
         chart.setLegendSide(Side.BOTTOM);
 		return chart;
 	}
