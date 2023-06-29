@@ -1,17 +1,15 @@
 
 
-import atlantafx.base.theme.PrimerLight;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -96,6 +94,7 @@ public class Main extends Application {
         
         sidebar.getChildren().addAll(dashBoardBtn, patientsBtn, appointmentsBtn,prescriptionsBtn,physiciansBtn);
 
+        
         Button logoBtn = new Button("Birzeit Clinic");
         logoBtn.setGraphic(clinicIconView);
         logoBtn.setMaxWidth(170);
@@ -110,17 +109,28 @@ public class Main extends Application {
         Scene scene = new Scene(root,1300,750);
 
         DashBoard dashboard = new DashBoard(primaryStage,scene);
+  
         dashBoardBtn.setOnAction(e -> {
         	root.setCenter(null);
         	root.setCenter(dashboard);
         });
 
+        PatientsTab patients = new PatientsTab();
         patientsBtn.setOnAction(e -> {
         	root.setCenter(null);
-
+        	root.setCenter(patients);
         });
 
         appointmentsBtn.setOnAction(e -> {
+        	root.setCenter(null);
+
+        });
+        
+        prescriptionsBtn.setOnAction(e->{
+        	root.setCenter(null);
+
+        });
+        physiciansBtn.setOnAction(e->{
         	root.setCenter(null);
 
         });
