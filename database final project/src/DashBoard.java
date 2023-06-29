@@ -149,8 +149,6 @@ public class DashBoard extends BorderPane {
 			if (resultSet2.next()) {
 				maleCount = resultSet2.getInt(1);
 			}
-			System.out.println("Females " + femaleCount);
-			System.out.println("Males " + maleCount);
 			maleSeries.getData().add(new XYChart.Data<>(months[i], maleCount));
 		}
 

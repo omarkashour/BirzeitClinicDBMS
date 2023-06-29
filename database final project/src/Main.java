@@ -40,9 +40,6 @@ public class Main extends Application {
     	
     	decodePass();
     	url = "jdbc:mysql://" + ip + ":" + port + "/" + dbName;
-        primaryStage.setTitle("Birzeit University Clinic DBMS");
-        primaryStage.setWidth(600);
-        primaryStage.setHeight(400);
   
         // Create sidebar
         VBox sidebar = new VBox();
@@ -110,8 +107,8 @@ public class Main extends Application {
         root.setStyle("-fx-background-color: #FCAEAE;");
 
         root.setTop(logoBtn);
-        
-        Scene scene = new Scene(root);
+
+        Scene scene = new Scene(root,1300,750);
 
         DashBoard dashboard = new DashBoard(primaryStage,scene);
         dashBoardBtn.setOnAction(e -> {
@@ -128,11 +125,12 @@ public class Main extends Application {
         	root.setCenter(null);
 
         });
-        
+
 //		Application.setUserAgentStylesheet(new PrimerLight().getUserAgentStylesheet());
         scene.getStylesheets().add("style.css");
-        primaryStage.setFullScreen(true);
+//        primaryStage.setFullScreen(true);
         primaryStage.setScene(scene);
+        primaryStage.setTitle("Birzeit University Clinic DBMS");
         primaryStage.show();
     }
 
