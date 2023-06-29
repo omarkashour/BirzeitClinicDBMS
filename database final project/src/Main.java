@@ -37,7 +37,6 @@ public class Main extends Application {
 	
     @Override
     public void start(Stage primaryStage) {
-    	
     	decodePass();
     	url = "jdbc:mysql://" + ip + ":" + port + "/" + dbName;
   

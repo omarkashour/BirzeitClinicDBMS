@@ -44,7 +44,7 @@ public class DashBoard extends BorderPane {
 
 		String averageCost = "";
 		try {
-			averageCost = "$" + getAverageCost();
+			averageCost = "\u20AA" + getAverageCost();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -52,7 +52,7 @@ public class DashBoard extends BorderPane {
 
 		String currentMonthProfit = "";
 		try {
-			currentMonthProfit = "$" + getCurrentMonthProfit();
+			currentMonthProfit = "\u20AA" + getCurrentMonthProfit();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -60,7 +60,7 @@ public class DashBoard extends BorderPane {
 
 		String currentYearProfit = "";
 		try {
-			currentYearProfit = "$" + getCurrentYearProfit();
+			currentYearProfit = "\u20AA" + getCurrentYearProfit();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
