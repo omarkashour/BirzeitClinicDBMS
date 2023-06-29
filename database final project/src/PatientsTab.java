@@ -6,17 +6,22 @@ import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import atlantafx.base.theme.PrimerLight;
 import atlantafx.base.util.DoubleStringConverter;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.util.converter.IntegerStringConverter;
 
 public class PatientsTab extends BorderPane {
@@ -36,7 +41,8 @@ public class PatientsTab extends BorderPane {
 	ComboBox<String> genderCB = new ComboBox<String>();
 	DatePicker dateOfBirthPicker = new DatePicker();
 	TextField emailAddressTF = new TextField();
-	TextField PatientIDTF = new TextField();
+	TextField addressTF = new TextField();
+	TextField patientIDTF = new TextField();
 
 	public PatientsTab() throws SQLException {
 		genderCB.getItems().addAll("Male","Female");
@@ -45,8 +51,50 @@ public class PatientsTab extends BorderPane {
 			 
 		 });
 		 TableView<Patient> tv = createPatientsTable();
+		 
+	
+		 tv.setMinHeight(600);
+//		 tv.setStyle("-fx-background-color: #f4f4f4; -fx-table-cell-border-color: transparent; -fx-table-header-border-color: transparent; -fx-padding: 5;");
+		 
+		 Label titleL = new Label("Edit or View Patients Table");
+		 titleL.setStyle("-fx-text-fill: white; -fx-font-size: 26px; -fx-font-weight: bold;");
+		 VBox tableVB = new VBox(titleL,tv);
+		 tableVB.setSpacing(10);
+		 titleL.setAlignment(Pos.CENTER);
+		 tableVB.setAlignment(Pos.CENTER);
+		 setRight(tableVB);
+		 setMargin(tv, new Insets(15));
+		 
+		 GridPane gp = new GridPane();
+		 firstNameL.setStyle("-fx-text-fill: white; -fx-font-size: 22px; -fx-font-weight: bold;");
+		 lastNameL.setStyle("-fx-text-fill: white; -fx-font-size: 22px; -fx-font-weight: bold;");
+		 genderL.setStyle("-fx-text-fill: white; -fx-font-size: 22px; -fx-font-weight: bold;");
+		 dateOfBirthL.setStyle("-fx-text-fill: white; -fx-font-size: 22px; -fx-font-weight: bold;");
+		 addressL.setStyle("-fx-text-fill: white; -fx-font-size: 22px; -fx-font-weight: bold;");
+		 emailAddressL.setStyle("-fx-text-fill: white; -fx-font-size: 22px; -fx-font-weight: bold;");
+		 patientIDL.setStyle("-fx-text-fill: white; -fx-font-size: 22px; -fx-font-weight: bold;");
+		 gp.add(firstNameL, 0, 0);
+		 gp.add(lastNameL, 0, 1);
+		 gp.add(genderL, 0, 2);
+		 gp.add(dateOfBirthL, 0, 3);
+		 gp.add(addressL, 0, 4);
+		 gp.add(emailAddressL, 0, 5);
+		 gp.add(patientIDL, 0, 9);
 
-		 setRight(tv);
+		 gp.add(firstNameTF, 1, 0);
+		 gp.add(lastNameTF, 1, 1);
+		 gp.add(genderCB, 1, 2);
+		 gp.add(dateOfBirthPicker, 1, 3);
+		 gp.add(addressTF, 1, 4);
+		 gp.add(emailAddressTF, 1, 5);
+		 gp.add(patientIDTF, 1, 9);
+		 gp.setHgap(15);
+		 gp.setVgap(15);
+		 gp.setAlignment(Pos.CENTER);
+		 setMargin(gp, new Insets(85));
+		 setLeft(gp);
+		 setPadding(new Insets(15));
+
 	}
 	
 	public TableView<Patient> createPatientsTable() throws SQLException {
@@ -254,6 +302,7 @@ public class PatientsTab extends BorderPane {
 			addPatients(tv);
 
 		tv.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
 		return tv;
 	}
 	
