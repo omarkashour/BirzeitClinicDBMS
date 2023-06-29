@@ -67,9 +67,9 @@ public class DashBoard extends BorderPane {
 		}
 
 		StackPane totalPatientsCard = createCard("Total Patients", totalPatients, "heart-red.png");
-		StackPane averageCostCard = createCard("Average Cost", averageCost, "health-checkup.png");
-		StackPane currentMonthProfitCard = createCard("Month Profit", currentMonthProfit, "money-month.png");
-		StackPane currentYearProfitCard = createCard("Year Profit", currentYearProfit, "money-year.png");
+		StackPane averageCostCard = createCard("Overall Average Cost", averageCost, "health-checkup.png");
+		StackPane currentMonthProfitCard = createCard("Current Month Profit", currentMonthProfit, "money-month.png");
+		StackPane currentYearProfitCard = createCard("Current Year Profit", currentYearProfit, "money-year.png");
 
 		gp.add(totalPatientsCard, 0, 0);
 		gp.add(averageCostCard, 1, 0);
@@ -229,51 +229,49 @@ public class DashBoard extends BorderPane {
 	}
 
 	public StackPane createCard(String label1Text, String label2Text, String imagePath) {
-		HBox card = new HBox(20);
-		card.setPadding(new Insets(10));
-		card.setAlignment(Pos.CENTER);
-		card.setPrefSize(200, 150);
-		card.setStyle(" -fx-border-color: #FF6666; -fx-border-width: 2px; -fx-border-radius: 15px;");
+	    HBox card = new HBox(20);
+	    card.setPadding(new Insets(15)); // Increase padding for a larger card
+	    card.setAlignment(Pos.CENTER);
+	    card.setPrefSize(250, 200); // Increase width and height for a larger card
+	    card.setStyle("-fx-border-color: #FF6666; -fx-border-width: 2px; -fx-border-radius: 15px;");
 
-		VBox contentBox = new VBox(30);
-		contentBox.setAlignment(Pos.CENTER_LEFT);
+	    VBox contentBox = new VBox(30);
+	    contentBox.setAlignment(Pos.CENTER_LEFT);
 
-		Label label1 = new Label(label1Text);
-		label1.setFont(new Font("Roboto", 15));
-		label1.setTextFill(Color.web("#000000"));
+	    Label label1 = new Label(label1Text);
+	    label1.setStyle("-fx-font-size: 18px; -fx-text-fill: #000000;");
 
-		Label label2 = new Label(label2Text);
-		label2.setFont(new Font("Roboto", 22));
-		label2.setTextFill(Color.web("#000000"));
-		label2.setStyle("-fx-font-weight: bold;");
+	    Label label2 = new Label(label2Text);
+	    label2.setStyle("-fx-font-size: 24px; -fx-text-fill: #000000; -fx-font-weight: bold;");
 
-		ImageView imageView = new ImageView(new Image(imagePath));
-		imageView.setFitWidth(60);
-		imageView.setPreserveRatio(true);
+	    ImageView imageView = new ImageView(new Image(imagePath));
+	    imageView.setFitWidth(80); // Increase width for a larger image
+	    imageView.setPreserveRatio(true);
+	   HBox iconAndPriceHB = new HBox(imageView,label2);
+	   iconAndPriceHB.setAlignment(Pos.CENTER);
+	   iconAndPriceHB.setSpacing(20);
+	    contentBox.getChildren().addAll(iconAndPriceHB, label1);
+	    contentBox.setAlignment(Pos.CENTER);
+//	    card.getChildren().addAll(contentBox, label2);
 
-		contentBox.getChildren().addAll(imageView, label1);
+	    Rectangle rec = new Rectangle();
+	    rec.setFill(Color.WHITE);
+	    rec.setWidth(250); // Increase width for a larger card
+	    rec.setHeight(200); // Increase height for a larger card
+	    rec.setArcWidth(32);
+	    rec.setArcHeight(32);
 
-		card.getChildren().addAll(contentBox, label2);
+	    StackPane overall = new StackPane();
+	    overall.getChildren().addAll(rec, contentBox);
+	    // Add drop shadow effect to the StackPane
+	    DropShadow dropShadow = new DropShadow();
+	    dropShadow.setColor(Color.web("#454545"));
+	    dropShadow.setRadius(5);
+	    dropShadow.setOffsetX(0);
+	    dropShadow.setOffsetY(2);
+	    overall.setEffect(dropShadow);
 
-		Rectangle rec = new Rectangle();
-		rec.setFill(Color.WHITE);
-		rec.setWidth(200);
-		rec.setHeight(200);
-		rec.setArcWidth(32);
-		rec.setArcHeight(32);
-
-		StackPane overall = new StackPane();
-		overall.getChildren().addAll(rec, card);
-
-		// Add drop shadow effect to the StackPane
-		DropShadow dropShadow = new DropShadow();
-		dropShadow.setColor(Color.web("#454545"));
-		dropShadow.setRadius(5);
-		dropShadow.setOffsetX(0);
-		dropShadow.setOffsetY(2);
-		overall.setEffect(dropShadow);
-
-		return overall;
+	    return overall;
 	}
 
 }
