@@ -43,6 +43,7 @@ public class Main extends Application {
         primaryStage.setWidth(600);
         primaryStage.setHeight(400);
 
+        
         // Create sidebar
         VBox sidebar = new VBox();
         sidebar.setPadding(new Insets(10));

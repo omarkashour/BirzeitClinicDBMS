@@ -56,6 +56,7 @@ public class DashBoard extends BorderPane {
 			e.printStackTrace();
 		}
 
+		
 		String currentYearProfit = "";
 		try {
 			currentYearProfit = "$" + getCurrentYearProfit();
