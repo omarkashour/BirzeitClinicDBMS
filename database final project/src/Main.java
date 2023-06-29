@@ -1,5 +1,7 @@
 
 
+import java.sql.SQLException;
+
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -34,7 +36,7 @@ public class Main extends Application {
 	}
 	
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) throws SQLException {
     	decodePass();
     	url = "jdbc:mysql://" + ip + ":" + port + "/" + dbName;
   
@@ -97,7 +99,7 @@ public class Main extends Application {
         
         Button logoBtn = new Button("Birzeit Clinic");
         logoBtn.setGraphic(clinicIconView);
-        logoBtn.setMaxWidth(170);
+        logoBtn.setMaxWidth(169.2);
         logoBtn.setStyle("-fx-background-color: #FF8989; -fx-text-fill: white; -fx-font-size: 17px; -fx-background-radius: 0px; -fx-font-weight: bold;");
         
         BorderPane root = new BorderPane();
@@ -116,6 +118,7 @@ public class Main extends Application {
         });
 
         PatientsTab patients = new PatientsTab();
+
         patientsBtn.setOnAction(e -> {
         	root.setCenter(null);
         	root.setCenter(patients);
