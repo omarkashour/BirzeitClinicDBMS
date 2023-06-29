@@ -31,6 +31,7 @@ public class DashBoard extends BorderPane {
 	HBox tablesHB = new HBox();
 
 	public DashBoard(Stage primaryStage, Scene scene) {
+		
 		GridPane gp = new GridPane();
 		String totalPatients = "";
 		try {
