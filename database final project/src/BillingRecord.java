@@ -1,6 +1,4 @@
-import java.time.LocalDate;
-
-public class BillingRecord {
+public class BillingRecord implements Comparable<BillingRecord> {
 	private int record_id;
 	private int patient_id;
 	private String billing_method;
@@ -95,6 +93,15 @@ public class BillingRecord {
 
 	public void setPayment_status(String payment_status) {
 		this.payment_status = payment_status;
+	}
+
+	@Override
+	public int compareTo(BillingRecord o) {
+		if(this.record_id > o.record_id)
+			return 1;
+		else if(this.record_id < o.record_id)
+			return -1;
+		return 0;
 	}
 
 }

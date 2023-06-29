@@ -1,6 +1,3 @@
-import java.time.LocalDate;
-import java.util.Date;
-
 public class Patient implements Comparable<Patient> {
 	private int patient_id;
 	private String first_name;

@@ -1,5 +1,5 @@
 
-public class Physician {
+public class Physician implements Comparable<Physician> {
 	private int phys_id;
 	private String first_name;
 	private String last_name;
@@ -87,6 +87,15 @@ public class Physician {
 
 	public void setGender(String gender) {
 		this.gender = gender;
+	}
+
+	@Override
+	public int compareTo(Physician o) {
+		if(this.phys_id > o.phys_id)
+			return 1;
+		else if(this.phys_id < o.phys_id)
+			return -1;
+		return 0;
 	}
 
 }

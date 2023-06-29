@@ -1,6 +1,7 @@
-import java.time.LocalDate;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
-public class Appointment {
+public class Appointment implements Comparable<Appointment> {
 	private int ap_id;
 	private int patient_id;
 	private int phys_id;
@@ -96,5 +97,20 @@ public class Appointment {
 	public void setDuration(String duration) {
 		this.duration = duration;
 	}
+
+	@Override
+	public int compareTo(Appointment o) {
+		   SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		    try {
+		        Date thisDate = dateFormat.parse(this.ap_date);
+		        Date otherDate = dateFormat.parse(o.ap_date);
+		        return thisDate.compareTo(otherDate);
+		    } catch (Exception e) {
+		        e.printStackTrace();
+		    }
+		    return 0;
+	}
+	
+	
 
 }

@@ -1,5 +1,5 @@
 
-public class MedicalRecord {
+public class MedicalRecord implements Comparable<MedicalRecord> {
 	private int record_id;
 	private int patient_id;
 	private String illness_history;
@@ -64,6 +64,15 @@ public class MedicalRecord {
 
 	public void setMedication_history(String medication_history) {
 		this.medication_history = medication_history;
+	}
+
+	@Override
+	public int compareTo(MedicalRecord o) {
+		if(this.record_id > o.record_id )
+			return 1;
+		else if(this.record_id < o.record_id)
+			return -1;
+		return 0;
 	}
 
 }
