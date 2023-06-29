@@ -132,6 +132,7 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         primaryStage.setTitle("Birzeit University Clinic DBMS");
         primaryStage.show();
+        dashBoardBtn.fire();
     }
 
     public static void main(String[] args) {
