@@ -8,13 +8,15 @@ import java.util.ArrayList;
 
 import atlantafx.base.theme.PrimerLight;
 import atlantafx.base.util.DoubleStringConverter;
+import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -22,6 +24,7 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import javafx.util.converter.IntegerStringConverter;
 
 public class PatientsTab extends BorderPane {
@@ -44,7 +47,11 @@ public class PatientsTab extends BorderPane {
 	TextField addressTF = new TextField();
 	TextField patientIDTF = new TextField();
 
-	public PatientsTab() throws SQLException {
+	
+	Button editOrViewPatientsTable = new Button("Edit Or View Patients Table");
+	Button searchByIDBtn = new Button("Search by ID");
+	
+	public PatientsTab(Stage primaryStage, Scene scene) throws SQLException {
 		genderCB.getItems().addAll("Male","Female");
 		 dateOfBirthPicker.setOnAction(e->{
 			 LocalDate selectedDate = dateOfBirthPicker.getValue();
@@ -54,7 +61,6 @@ public class PatientsTab extends BorderPane {
 		 
 	
 		 tv.setMinHeight(600);
-//		 tv.setStyle("-fx-background-color: #f4f4f4; -fx-table-cell-border-color: transparent; -fx-table-header-border-color: transparent; -fx-padding: 5;");
 		 
 		 Label titleL = new Label("Edit or View Patients Table");
 		 titleL.setStyle("-fx-text-fill: white; -fx-font-size: 26px; -fx-font-weight: bold;");
@@ -62,8 +68,22 @@ public class PatientsTab extends BorderPane {
 		 tableVB.setSpacing(10);
 		 titleL.setAlignment(Pos.CENTER);
 		 tableVB.setAlignment(Pos.CENTER);
-		 setRight(tableVB);
-		 setMargin(tv, new Insets(15));
+//		 setRight(tableVB);
+//		 setMargin(tv, new Insets(15));
+		 
+		 editOrViewPatientsTable.setOnAction(e->{
+			 Stage popupStage = new Stage();
+			 popupStage.setTitle("Popup Window");
+			 BorderPane contentPane = new BorderPane();
+			 contentPane.setStyle("-fx-background-color: #FCAEAE;");
+			 contentPane.setCenter(tableVB);
+			 contentPane.setPadding(new Insets(20));
+			 Scene popupScene = new Scene(contentPane, 820, 700);
+			 popupScene.setUserAgentStylesheet(new PrimerLight().getUserAgentStylesheet());
+			 popupStage.setScene(popupScene);
+		     popupStage.show();
+
+		 });
 		 
 		 GridPane gp = new GridPane();
 		 firstNameL.setStyle("-fx-text-fill: white; -fx-font-size: 22px; -fx-font-weight: bold;");
@@ -88,6 +108,7 @@ public class PatientsTab extends BorderPane {
 		 gp.add(addressTF, 1, 4);
 		 gp.add(emailAddressTF, 1, 5);
 		 gp.add(patientIDTF, 1, 9);
+		 gp.add(editOrViewPatientsTable, 0, 11);
 		 gp.setHgap(15);
 		 gp.setVgap(15);
 		 gp.setAlignment(Pos.CENTER);

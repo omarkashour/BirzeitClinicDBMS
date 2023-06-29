@@ -99,7 +99,7 @@ public class Main extends Application {
         
         Button logoBtn = new Button("Birzeit Clinic");
         logoBtn.setGraphic(clinicIconView);
-        logoBtn.setMaxWidth(169.2);
+        logoBtn.setMaxWidth(169.75);
         logoBtn.setStyle("-fx-background-color: #FF8989; -fx-text-fill: white; -fx-font-size: 17px; -fx-background-radius: 0px; -fx-font-weight: bold;");
         
         BorderPane root = new BorderPane();
@@ -117,7 +117,7 @@ public class Main extends Application {
         	root.setCenter(dashboard);
         });
 
-        PatientsTab patients = new PatientsTab();
+        PatientsTab patients = new PatientsTab(primaryStage,scene);
 
         patientsBtn.setOnAction(e -> {
         	root.setCenter(null);
