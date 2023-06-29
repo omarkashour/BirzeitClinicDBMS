@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
+	
 	public static String username = "root";
 	public static String password = "50342ADMIN54ZZZ8DATABASESSA5OLJ~$3-=LHJ;MYSQL;;-=-=SSH32`4===TABLE-SIZE:m=2R456BNMKLJSGFJ40a2444444423-..+8r---_+TUICNM911!2243586234-=XZ";
 	public static String ip = "localhost";
