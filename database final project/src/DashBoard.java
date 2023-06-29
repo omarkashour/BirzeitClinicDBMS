@@ -9,6 +9,10 @@ import java.util.Calendar;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
@@ -51,7 +55,7 @@ public class DashBoard extends BorderPane {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		String currentYearProfit = "";
 		try {
 			currentYearProfit = "$" + getCurrentYearProfit();
@@ -59,7 +63,7 @@ public class DashBoard extends BorderPane {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		StackPane totalPatientsCard = createCard("Total Patients", totalPatients, "heart-red.png");
 		StackPane averageCostCard = createCard("Average Cost", averageCost, "health-checkup.png");
 		StackPane currentMonthProfitCard = createCard("Month Profit", currentMonthProfit, "money-month.png");
@@ -69,10 +73,91 @@ public class DashBoard extends BorderPane {
 		gp.add(averageCostCard, 1, 0);
 		gp.add(currentMonthProfitCard, 2, 0);
 		gp.add(currentYearProfitCard, 3, 0);
-
+		gp.setAlignment(Pos.CENTER);
 		gp.setHgap(15);
 		setPadding(new Insets(20));
+		LineChart<String, Number> chart;
+		try {
+			chart = createMaleFemaleChart();
+			setBottom(chart);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		setTop(gp);
+		
+	}
+
+	private LineChart<String,Number> createMaleFemaleChart() throws SQLException { // Create the x-axis (category axis)
+		Connection connection = DriverManager.getConnection(Main.url, Main.username, Main.password);
+		Statement statement = connection.createStatement();
+		CategoryAxis xAxis = new CategoryAxis();
+		NumberAxis yAxis = new NumberAxis();
+		String[] months = { "January", "February", "March", "April", "May", "June", "July", "August", "September",
+				"October", "November", "December" };
+		Calendar c = Calendar.getInstance();
+		c.setTimeInMillis(System.currentTimeMillis());
+		int year = c.get(c.YEAR);
+
+		// Create the y-axis (number axis)
+
+		// Create the line chart
+		LineChart<String, Number> chart = new LineChart<>(xAxis, yAxis);
+
+		// Set chart title and axis labels
+		chart.setTitle("Patient Visits by Gender");
+		xAxis.setLabel("Month");
+		yAxis.setLabel("Number of Visits");
+		yAxis.setTickUnit(1);
+		
+		// Create data series for female visits
+		XYChart.Series<String, Number> femaleSeries = new XYChart.Series<>();
+		femaleSeries.setName("Female");
+		
+
+		XYChart.Series<String, Number> maleSeries = new XYChart.Series<>();
+		maleSeries.setName("Male");
+
+		// Populate the female data series with sample data (replace with your own data)
+		int femaleCount = 0;
+		int maleCount = 0;
+		for (int i = 0; i < 12; i++) {
+			int month = i + 1;
+			String sqlMonth = "";
+			if(month%10 == 0) {
+				sqlMonth = "0" + month;
+			}else {
+				sqlMonth = month +"";
+			}
+			YearMonth yearMonthObject = YearMonth.of(year, month);
+			int daysInMonth = yearMonthObject.lengthOfMonth();
+			String sqlDaysInMonth = "";
+			if(daysInMonth%10 == 0) {
+				sqlDaysInMonth = "0" + daysInMonth;
+			}else {
+				sqlDaysInMonth = daysInMonth +"";
+			}
+			ResultSet resultSet = statement.executeQuery("Select count(*) from appointment a , patient p where p.gender = 'F' and p.patient_id = a.patient_id and a.ap_date >= " + "'" + year +"-" + month + "-01'" + "and a.ap_date <= " + "'" + year + "-" + sqlMonth + "-" + sqlDaysInMonth + "';");
+			if (resultSet.next()) {
+				femaleCount = resultSet.getInt(1);
+			}
+			femaleSeries.getData().add(new XYChart.Data<>(months[i], femaleCount));
+
+			ResultSet resultSet2 = statement.executeQuery("Select count(*) from appointment a , patient p where p.gender = 'M' and p.patient_id = a.patient_id and a.ap_date >= '" + year +"-" + month + "-01'" + " and a.ap_date <= '" + year + "-" + sqlMonth + "-" + sqlDaysInMonth + "';");
+			if (resultSet2.next()) {
+				maleCount = resultSet2.getInt(1);
+			}
+			System.out.println("Females " + femaleCount);
+			System.out.println("Males " + maleCount);
+			maleSeries.getData().add(new XYChart.Data<>(months[i], maleCount));
+		}
+
+		// Add the data series to the chart
+		chart.getData().add(femaleSeries);
+		chart.getData().add(maleSeries);
+
+		return chart;
 	}
 
 	private double getCurrentYearProfit() throws SQLException {
@@ -81,7 +166,8 @@ public class DashBoard extends BorderPane {
 		Calendar c = Calendar.getInstance();
 		c.setTimeInMillis(System.currentTimeMillis());
 		int year = c.get(c.YEAR);
-		ResultSet resultSet = statement.executeQuery("Select SUM(cost) from appointment where ap_date >= '" + year + "-1-1' and ap_date <= " + "'" + year + "-12-31'" );
+		ResultSet resultSet = statement.executeQuery("Select SUM(cost) from appointment where ap_date >= '" + year
+				+ "-1-1' and ap_date <= " + "'" + year + "-12-31'");
 		double res = 0;
 		if (resultSet.next()) {
 			res = resultSet.getDouble(1);
