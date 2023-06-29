@@ -1,0 +1,157 @@
+
+
+/* Customize JavaFX controls */
+.root {
+    -color-primary: #FFEADD;
+    -color-secondary: #FCAEAE;
+    -color-tertiary: #FF8989;
+    -color-quaternary: #FF6666;
+}
+
+.button {
+    -fx-background-color: #FF8989;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-background-radius: 20px; /* Rounded button */
+}
+
+.button:hover,
+.button:pressed,
+.button:focused {
+    -fx-background-color: #FF6666;
+}
+
+.label {
+    -fx-font-size: 16px;
+  -fx-font-family: 'Roboto', sans-serif; /* Set the font to Roboto */
+}
+
+.text-field {
+    -fx-background-color: #FFEADD;
+    -fx-text-fill: black;
+}
+
+.text-area {
+    -fx-background-color: #FFEADD;
+    -fx-text-fill: black;
+}
+
+.combo-box {
+    -fx-background-color: #FFEADD;
+    -fx-text-fill: black;
+}
+
+.check-box {
+    -fx-text-fill: #FCAEAE;
+}
+
+.radio-button {
+    -fx-text-fill: #FCAEAE;
+}
+
+.slider {
+    -fx-control-inner-background: #FFEADD;
+    -fx-control-inner-background-alt: #FCAEAE;
+    -fx-accent: #FF8989;
+}
+
+.progress-bar {
+    -fx-accent: #FF6666;
+}
+
+.separator {
+    -fx-background-color: #FCAEAE;
+}
+
+/* Customize application-specific styles */
+.header {
+    -fx-background-color: #FFEADD;
+    -fx-text-fill: white;
+    -fx-font-size: 24px;
+}
+
+.footer {
+    -fx-background-color: #FF6666;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+}
+
+.list-view {
+    -fx-background-color: #FFEADD;
+    -fx-text-fill: black;
+}
+
+.tree-view {
+    -fx-background-color: #FFEADD;
+    -fx-text-fill: black;
+}
+
+.tooltip {
+    -fx-background-color: #FCAEAE;
+    -fx-text-fill: white;
+}
+
+.dialog-pane {
+    -fx-background-color: #FFEADD;
+    -fx-text-fill: black;
+}
+
+.menu-bar {
+    -fx-background-color: #FFEADD;
+    -fx-text-fill: black;
+}
+
+.menu {
+    -fx-background-color: #FFEADD;
+    -fx-text-fill: black;
+}
+
+.tab-pane {
+    -fx-background-color: #FFEADD;
+    -fx-text-fill: black;
+}
+
+
+.button.navigation-button {
+    -fx-background-color: #FF8989;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-background-radius: 20px; /* Rounded button */
+    -fx-transition-duration: 0.2s; /* Transition duration for smooth animation */
+    -fx-transition-property: background-color; /* Apply transition only to background-color property */
+    -fx-min-width: 100px; /* Set the fixed width */
+    -fx-min-height: 40px; /* Set the fixed height */
+}
+
+.button.navigation-button:hover,
+.button.navigation-button:pressed,
+.button.navigation-button:focused {
+    -fx-background-color: #FF6666;
+}
+
+.button.navigation-button:hover {
+    -fx-background-color: #FF6666;
+    -fx-cursor: hand; /* Change cursor to hand on hover */
+}
+
+.button.navigation-button:pressed {
+    -fx-background-color: #FF6666;
+    -fx-scale-x: 0.95; /* Scale down button on press */
+    -fx-scale-y: 0.95;
+}
+
+.button.navigation-button:focused {
+    -fx-background-color: #FF6666;
+    -fx-scale-x: 1.05; /* Scale up button on focus */
+    -fx-scale-y: 1.05;
+}
+
+
+.table-row-cell:selected {
+    -fx-background-color: #FF6666;
+    -fx-text-fill: white;
+}
+
+.table-row-cell:hover {
+    -fx-background-color: #FCAEAE;
+}
