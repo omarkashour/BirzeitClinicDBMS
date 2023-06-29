@@ -260,7 +260,9 @@ public class DashBoard extends BorderPane {
 	    rec.setHeight(200); // Increase height for a larger card
 	    rec.setArcWidth(32);
 	    rec.setArcHeight(32);
-
+	    rec.setStroke(Color.web("#FF8989")); // Set the stroke color
+	    rec.setStrokeWidth(4); // Set the stroke width
+	    
 	    StackPane overall = new StackPane();
 	    overall.getChildren().addAll(rec, contentBox);
 	    // Add drop shadow effect to the StackPane
