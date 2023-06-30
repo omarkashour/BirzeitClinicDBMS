@@ -84,6 +84,7 @@ public class PatientsTab extends BorderPane {
 			 contentPane.setPadding(new Insets(20));
 			 Scene popupScene = new Scene(contentPane, 1100, 700);
 			 popupScene.setUserAgentStylesheet(new PrimerLight().getUserAgentStylesheet());
+//			 popupScene.getStylesheets().add("style.css");
 			 popupStage.setScene(popupScene);
 		     popupStage.show();
 
@@ -124,34 +125,32 @@ public class PatientsTab extends BorderPane {
 		 heightL.setStyle("-fx-text-fill: white; -fx-font-size: 22px; -fx-font-weight: bold;");
 		 weightL.setStyle("-fx-text-fill: white; -fx-font-size: 22px; -fx-font-weight: bold;");
 		 
-		 gp.add(firstNameL, 0, 0);
-		 gp.add(lastNameL, 0, 1);
-		 gp.add(genderL, 0, 2);
-		 gp.add(dateOfBirthL, 0, 3);
-		 gp.add(heightL, 0, 4);
-		 gp.add(weightL, 0, 5);
-		 gp.add(addressL, 0, 6);
-		 gp.add(emailAddressL, 0, 7);
-		 gp.add(patientIDL, 0, 11);
+		 gp.add(patientIDL, 0, 0);
+		 gp.add(firstNameL, 0, 1);
+		 gp.add(lastNameL, 0, 2);
+		 gp.add(genderL, 0, 3);
+		 gp.add(dateOfBirthL, 0, 4);
+		 gp.add(heightL, 0, 5);
+		 gp.add(weightL, 0, 6);
+		 gp.add(addressL, 0, 7);
+		 gp.add(emailAddressL, 0, 8);
 		 
-		 
-		 gp.add(firstNameTF, 1, 0);
-		 gp.add(lastNameTF, 1, 1);
-		 gp.add(genderCB, 1, 2);
-		 gp.add(dateOfBirthPicker, 1, 3);
-		 gp.add(heightTF, 1, 4);
-		 gp.add(weightTF, 1, 5);
-		 gp.add(addressTF, 1, 6);
-		 gp.add(emailAddressTF, 1, 7);
-		 gp.add(patientIDTF, 1, 11);
-		 gp.add(searchByIDBtn, 0, 13);
+		 gp.add(patientIDTF, 1, 0);
+		 gp.add(firstNameTF, 1, 1);
+		 gp.add(lastNameTF, 1, 2);
+		 gp.add(genderCB, 1, 3);
+		 gp.add(dateOfBirthPicker, 1, 4);
+		 gp.add(heightTF, 1, 5);
+		 gp.add(weightTF, 1, 6);
+		 gp.add(addressTF, 1, 7);
+		 gp.add(emailAddressTF, 1, 8);
+		 gp.add(searchByIDBtn, 2, 0);
+//		 gp.add(editOrViewPatientsTable, 0, 14);
 		 gp.setHgap(15);
 		 gp.setVgap(15);
 		 gp.setAlignment(Pos.CENTER);
-		 setMargin(gp, new Insets(85));
+		 setMargin(gp, new Insets(25));
 		 setLeft(gp);
-		 editOrViewPatientsTable.setAlignment(Pos.CENTER);
-		 setAlignment(editOrViewPatientsTable, Pos.CENTER);
 		 setPadding(new Insets(15));
 
 	}

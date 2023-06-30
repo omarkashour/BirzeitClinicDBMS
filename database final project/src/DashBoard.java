@@ -170,6 +170,7 @@ public class DashBoard extends BorderPane {
         yAxis.lookup(".axis-label").setStyle("-fx-font-size: 18px;"); // Set X-axis title font size
         
         chart.setLegendSide(Side.BOTTOM);
+//        chart.setStyle("-fx-background-color: #FF6666;");
 		return chart;
 	}
 

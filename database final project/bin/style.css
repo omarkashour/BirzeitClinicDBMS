@@ -11,8 +11,8 @@
 .button {
     -fx-background-color: -color-tertiary;
     -fx-text-fill: white;
-    -fx-font-size: 14px;
-    -fx-background-radius: 20px; /* Rounded button */
+    -fx-font-size: 14.0px;
+    -fx-background-radius: 20.0px; /* Rounded button */
 }
 
 .button:hover,
@@ -24,13 +24,15 @@
 .label {
   -fx-font-family: 'Roboto', sans-serif; /* Set the font to Roboto */
   -fx-text-fill: white;
-   -fx-font-size: 22px;
+   -fx-font-size: 22.0px;
     -fx-font-weight: bold;
 }
 
 .text-field {
     -fx-background-color: -color-primary;
     -fx-text-fill: black;
+    -fx-font-size: 16px; /* Increase the font size */
+    -fx-min-height: 32px; /* Increase the preferred height */
 }
 
 .text-area {
@@ -41,6 +43,7 @@
 .combo-box {
     -fx-background-color: -color-primary;
     -fx-text-fill: black;
+    -fx-pref-height: 22px; /* Increase the preferred height */
 }
 
 .check-box {
@@ -69,13 +72,13 @@
 .header {
     -fx-background-color: -color-primary;
     -fx-text-fill: white;
-    -fx-font-size: 24px;
+    -fx-font-size: 24.0px;
 }
 
 .footer {
     -fx-background-color: -color-quaternary;
     -fx-text-fill: white;
-    -fx-font-size: 16px;
+    -fx-font-size: 16.0px;
 }
 
 .list-view {
@@ -117,12 +120,12 @@
 .button.navigation-button {
     -fx-background-color: -color-tertiary;
     -fx-text-fill: white;
-    -fx-font-size: 16px;
-    -fx-background-radius: 20px; /* Rounded button */
+    -fx-font-size: 16.0px;
+    -fx-background-radius: 20.0px; /* Rounded button */
     -fx-transition-duration: 0.2s; /* Transition duration for smooth animation */
     -fx-transition-property: background-color; /* Apply transition only to background-color property */
-    -fx-min-width: 100px; /* Set the fixed width */
-    -fx-min-height: 40px; /* Set the fixed height */
+    -fx-min-width: 100.0px; /* Set the fixed width */
+    -fx-min-height: 40.0px; /* Set the fixed height */
 }
 
 .button.navigation-button:hover,
@@ -152,4 +155,58 @@
 .table-row-cell:selected {
     -fx-background-color: -color-quaternary;
     -fx-text-fill: white;
+}
+
+
+.table-row-cell:selected {
+    -fx-background-color: -color-quaternary;
+    -fx-text-fill: white;
+}
+.table-view {
+    -fx-background-color: #f5f5f5;
+    -fx-font-size: 12px;
+
+
+}
+
+
+
+.table-view .column-header {
+    -fx-border-width:0 0 0.2 0.2px;
+    -fx-border-color: black;
+    -fx-alignment: center;
+    -fx-background-color: #ecdede;
+    -fx-border-right-color: black;
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+    -fx-padding: 5px 10px;
+}
+
+ .table-row-cell {
+    -fx-border-width: 0 0 0.2px 0;
+    -fx-border-color: black;
+    -fx-background-color: #ffffff;
+}
+
+.table-view .table-row-cell:selected {
+    -fx-background-color: -color-quaternary;
+}
+
+.table-view .table-cell {
+
+    -fx-alignment: center-left;
+    -fx-padding: 5px 10px;
+}
+
+.table-view .table-cell:empty {
+    -fx-background-color: transparent;
+}
+
+.table-view .filler {
+    -fx-background-color: transparent;
+}
+
+.chart-legend-item {
+    -fx-text-fill: black; /* Set the text color */
+        -fx-font-weight: normal;
 }
