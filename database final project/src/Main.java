@@ -136,8 +136,11 @@ public class Main extends Application {
         	root.setCenter(null);
 
         });
+        
+        PhysicianPage physicians = new PhysicianPage();
         physiciansBtn.setOnAction(e->{
         	root.setCenter(null);
+        	root.setCenter(physicians);
 
         });
 

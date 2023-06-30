@@ -4,11 +4,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import atlantafx.base.theme.PrimerLight;
 import atlantafx.base.util.DoubleStringConverter;
-import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -89,6 +89,30 @@ public class PatientsTab extends BorderPane {
 
 		 });
 		 
+		 searchByIDBtn.setOnAction(e->{
+			 try {
+			 int patient_id = Integer.parseInt(patientIDTF.getText().trim());
+			 Patient p = searchForPatient(patient_id);
+			 if(p == null) return;
+				firstNameTF.setText(p.getFirst_name());
+				lastNameTF.setText(p.getLast_name());
+				genderCB.setValue((p.getGender() == "M") ? "Male" : "Female");
+				String dateString = "2023-06-30";
+				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+				LocalDate date = LocalDate.parse(dateString, formatter);
+				dateOfBirthPicker.setValue(date);	
+				emailAddressTF.setText(p.getEmail_address());
+				addressTF.setText(p.getAddress());
+				phone_numberTF.setText(p.getPhone_number());
+				weightTF.setText(p.getWeight()+"");
+				heightTF.setText(p.getHeight()+"");
+			 
+			 }
+			 catch(Exception e1) {
+				 
+			 }
+		 });
+		 
 		 GridPane gp = new GridPane();
 		 firstNameL.setStyle("-fx-text-fill: white; -fx-font-size: 22px; -fx-font-weight: bold;");
 		 lastNameL.setStyle("-fx-text-fill: white; -fx-font-size: 22px; -fx-font-weight: bold;");
@@ -99,6 +123,7 @@ public class PatientsTab extends BorderPane {
 		 patientIDL.setStyle("-fx-text-fill: white; -fx-font-size: 22px; -fx-font-weight: bold;");
 		 heightL.setStyle("-fx-text-fill: white; -fx-font-size: 22px; -fx-font-weight: bold;");
 		 weightL.setStyle("-fx-text-fill: white; -fx-font-size: 22px; -fx-font-weight: bold;");
+		 
 		 gp.add(firstNameL, 0, 0);
 		 gp.add(lastNameL, 0, 1);
 		 gp.add(genderL, 0, 2);
@@ -119,12 +144,14 @@ public class PatientsTab extends BorderPane {
 		 gp.add(addressTF, 1, 6);
 		 gp.add(emailAddressTF, 1, 7);
 		 gp.add(patientIDTF, 1, 11);
-		 gp.add(editOrViewPatientsTable, 0, 13);
+		 gp.add(searchByIDBtn, 0, 13);
 		 gp.setHgap(15);
 		 gp.setVgap(15);
 		 gp.setAlignment(Pos.CENTER);
 		 setMargin(gp, new Insets(85));
 		 setLeft(gp);
+		 editOrViewPatientsTable.setAlignment(Pos.CENTER);
+		 setAlignment(editOrViewPatientsTable, Pos.CENTER);
 		 setPadding(new Insets(15));
 
 	}
@@ -366,5 +393,30 @@ public class PatientsTab extends BorderPane {
 			
 		}
 
+	}
+	
+	public Patient searchForPatient(int patient_id) {
+		try {
+		Connection connection = DriverManager.getConnection(Main.url, Main.username, Main.password);
+		Statement statement = connection.createStatement();
+		ResultSet resultSet = statement.executeQuery("Select * from patient where patient_id = " + patient_id +";");
+		if (resultSet.next()) {
+			String first_name = resultSet.getString("first_name");
+			String last_name = resultSet.getString("last_name");
+			String address = resultSet.getString("address");
+			String date_of_birth = resultSet.getString("dob");
+			String email_address = resultSet.getString("email_address");
+			String phone_number = resultSet.getString("phone_number");
+			String gender = resultSet.getString("gender");
+			double height = resultSet.getDouble("height");
+			double weight = resultSet.getDouble("weight");
+			return new Patient(patient_id,first_name,last_name,address,date_of_birth,email_address,phone_number,gender,height,weight);
+		}
+
+		}
+		catch(Exception e) {
+			
+		}
+		return null;
 	}
 }
