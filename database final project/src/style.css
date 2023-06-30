@@ -31,7 +31,7 @@
 .text-field {
     -fx-background-color: -color-primary;
     -fx-text-fill: black;
-    -fx-font-size: 16px; /* Increase the font size */
+    -fx-font-size: 14px; /* Increase the font size */
     -fx-min-height: 32px; /* Increase the preferred height */
 }
 
@@ -210,3 +210,4 @@
     -fx-text-fill: black; /* Set the text color */
         -fx-font-weight: normal;
 }
+
