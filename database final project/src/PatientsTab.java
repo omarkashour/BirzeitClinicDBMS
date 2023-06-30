@@ -38,6 +38,10 @@ public class PatientsTab extends BorderPane {
 	Label addressL = new Label ("Address:");
 	Label emailAddressL = new Label ("Email Address:");
 	Label patientIDL = new Label ("Patient ID:");
+	Label weightL = new Label ("Weight:");
+	Label heightL = new Label ("Height:");
+	Label phoneL = new Label ("Phone Number:");
+	
 	
 	TextField firstNameTF = new TextField();
 	TextField lastNameTF = new TextField();
@@ -46,7 +50,9 @@ public class PatientsTab extends BorderPane {
 	TextField emailAddressTF = new TextField();
 	TextField addressTF = new TextField();
 	TextField patientIDTF = new TextField();
-
+	TextField phone_numberTF = new TextField();
+	TextField weightTF = new TextField();
+	TextField heightTF = new TextField();
 	
 	Button editOrViewPatientsTable = new Button("Edit Or View Patients Table");
 	Button searchByIDBtn = new Button("Search by ID");
@@ -62,7 +68,7 @@ public class PatientsTab extends BorderPane {
 	
 		 tv.setMinHeight(600);
 		 
-		 Label titleL = new Label("Edit or View Patients Table");
+		 Label titleL = new Label("Edit or View Patients Table (Double click to edit)");
 		 titleL.setStyle("-fx-text-fill: white; -fx-font-size: 26px; -fx-font-weight: bold;");
 		 VBox tableVB = new VBox(titleL,tv);
 		 tableVB.setSpacing(10);
@@ -71,12 +77,12 @@ public class PatientsTab extends BorderPane {
 		 
 		 editOrViewPatientsTable.setOnAction(e->{
 			 Stage popupStage = new Stage();
-			 popupStage.setTitle("Popup Window");
+			 popupStage.setTitle("Patients Table");
 			 BorderPane contentPane = new BorderPane();
 			 contentPane.setStyle("-fx-background-color: #FCAEAE;");
 			 contentPane.setCenter(tableVB);
 			 contentPane.setPadding(new Insets(20));
-			 Scene popupScene = new Scene(contentPane, 820, 700);
+			 Scene popupScene = new Scene(contentPane, 1100, 700);
 			 popupScene.setUserAgentStylesheet(new PrimerLight().getUserAgentStylesheet());
 			 popupStage.setScene(popupScene);
 		     popupStage.show();
@@ -91,22 +97,29 @@ public class PatientsTab extends BorderPane {
 		 addressL.setStyle("-fx-text-fill: white; -fx-font-size: 22px; -fx-font-weight: bold;");
 		 emailAddressL.setStyle("-fx-text-fill: white; -fx-font-size: 22px; -fx-font-weight: bold;");
 		 patientIDL.setStyle("-fx-text-fill: white; -fx-font-size: 22px; -fx-font-weight: bold;");
+		 heightL.setStyle("-fx-text-fill: white; -fx-font-size: 22px; -fx-font-weight: bold;");
+		 weightL.setStyle("-fx-text-fill: white; -fx-font-size: 22px; -fx-font-weight: bold;");
 		 gp.add(firstNameL, 0, 0);
 		 gp.add(lastNameL, 0, 1);
 		 gp.add(genderL, 0, 2);
 		 gp.add(dateOfBirthL, 0, 3);
-		 gp.add(addressL, 0, 4);
-		 gp.add(emailAddressL, 0, 5);
-		 gp.add(patientIDL, 0, 9);
-
+		 gp.add(heightL, 0, 4);
+		 gp.add(weightL, 0, 5);
+		 gp.add(addressL, 0, 6);
+		 gp.add(emailAddressL, 0, 7);
+		 gp.add(patientIDL, 0, 11);
+		 
+		 
 		 gp.add(firstNameTF, 1, 0);
 		 gp.add(lastNameTF, 1, 1);
 		 gp.add(genderCB, 1, 2);
 		 gp.add(dateOfBirthPicker, 1, 3);
-		 gp.add(addressTF, 1, 4);
-		 gp.add(emailAddressTF, 1, 5);
-		 gp.add(patientIDTF, 1, 9);
-		 gp.add(editOrViewPatientsTable, 0, 11);
+		 gp.add(heightTF, 1, 4);
+		 gp.add(weightTF, 1, 5);
+		 gp.add(addressTF, 1, 6);
+		 gp.add(emailAddressTF, 1, 7);
+		 gp.add(patientIDTF, 1, 11);
+		 gp.add(editOrViewPatientsTable, 0, 13);
 		 gp.setHgap(15);
 		 gp.setVgap(15);
 		 gp.setAlignment(Pos.CENTER);
