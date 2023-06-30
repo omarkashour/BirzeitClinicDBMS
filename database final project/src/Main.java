@@ -3,18 +3,20 @@
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.List;
 
-import atlantafx.base.theme.PrimerLight;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -42,6 +44,9 @@ public class Main extends Application {
 	
     @Override
     public void start(Stage primaryStage) throws SQLException {
+        Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
+        System.out.println(primaryScreenBounds.getWidth());
+    	
     	decodePass();
     	url = "jdbc:mysql://" + ip + ":" + port + "/" + dbName;
     	connection = DriverManager.getConnection(Main.url, Main.username, Main.password);
@@ -117,10 +122,10 @@ public class Main extends Application {
         closeBtn.setOnAction(e->{
         	primaryStage.close();
         });
-        Scene scene = new Scene(root,1300,750);
+        Scene scene = new Scene(root,primaryScreenBounds.getWidth()/1.3,primaryScreenBounds.getHeight()/1.3);
 
         DashBoard dashboard = new DashBoard(primaryStage,scene);
-  
+        
         dashBoardBtn.setOnAction(e -> {
         	root.setCenter(null);
         	root.setCenter(dashboard);
