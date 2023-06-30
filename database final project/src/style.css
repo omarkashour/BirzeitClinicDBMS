@@ -44,6 +44,10 @@
     -fx-background-color: -color-primary;
     -fx-text-fill: black;
     -fx-pref-height: 22px; /* Increase the preferred height */
+    -fx-font-size: 14px; /* Set the desired font size */
+}
+.combo-box .list-cell {
+    -fx-font-size: 14px; /* Set the desired font size */
 }
 
 .check-box {

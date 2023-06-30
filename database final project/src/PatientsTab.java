@@ -42,6 +42,7 @@ public class PatientsTab extends BorderPane {
 	Label weightL = new Label("Weight:");
 	Label heightL = new Label("Height:");
 	Label phoneL = new Label("Phone Number:");
+	Label statusL = new Label("");
 
 	TextField firstNameTF = new TextField();
 	TextField lastNameTF = new TextField();
@@ -59,7 +60,7 @@ public class PatientsTab extends BorderPane {
 	Button addPatientBtn = new Button("Add Patient");
 	Button deletePatientBtn = new Button("Delete Patient");
 	static TableView<Patient> patientsTV = new TableView<Patient>();
-
+	
 	public PatientsTab(Stage primaryStage, Scene scene) throws SQLException {
 		genderCB.getItems().addAll("Male", "Female");
 		dateOfBirthPicker.setOnAction(e -> {
@@ -67,31 +68,28 @@ public class PatientsTab extends BorderPane {
 
 		});
 
+		patientsTV = createPatientsTable();
+
 		editOrViewPatientsTable.setOnAction(e -> {
-			try {
-				patientsTV = createPatientsTable();
-				patientsTV.setMinHeight(600);
-				Label titleL = new Label("Edit or View Patients Table (Double click to edit)");
-				titleL.setStyle("-fx-text-fill: white; -fx-font-size: 26px; -fx-font-weight: bold;");
-				VBox tableVB = new VBox(titleL, patientsTV);
-				tableVB.setSpacing(10);
-				titleL.setAlignment(Pos.CENTER);
-				tableVB.setAlignment(Pos.CENTER);
-				Stage popupStage = new Stage();
-				popupStage.setTitle("Patients Table");
-				BorderPane contentPane = new BorderPane();
-				contentPane.setStyle("-fx-background-color: #FCAEAE;");
-				contentPane.setCenter(tableVB);
-				contentPane.setPadding(new Insets(20));
-				Scene popupScene = new Scene(contentPane, 1100, 700);
-				popupScene.setUserAgentStylesheet(new PrimerLight().getUserAgentStylesheet());
+			addAllPatientsToTable(patientsTV);
+			patientsTV.setMinHeight(600);
+			Label titleL = new Label("Edit or View Patients Table (Double click to edit)");
+			titleL.setStyle("-fx-text-fill: white; -fx-font-size: 26px; -fx-font-weight: bold;");
+			VBox tableVB = new VBox(titleL, patientsTV);
+			tableVB.setSpacing(10);
+			titleL.setAlignment(Pos.CENTER);
+			tableVB.setAlignment(Pos.CENTER);
+			Stage popupStage = new Stage();
+			popupStage.setTitle("Patients Table");
+			BorderPane contentPane = new BorderPane();
+			contentPane.setStyle("-fx-background-color: #FCAEAE;");
+			contentPane.setCenter(tableVB);
+			contentPane.setPadding(new Insets(20));
+			Scene popupScene = new Scene(contentPane, 1100, 700);
+			popupScene.setUserAgentStylesheet(new PrimerLight().getUserAgentStylesheet());
 //			 popupScene.getStylesheets().add("style.css");
-				popupStage.setScene(popupScene);
-				popupStage.show();
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			popupStage.setScene(popupScene);
+			popupStage.show();
 
 		});
 
@@ -99,8 +97,10 @@ public class PatientsTab extends BorderPane {
 			try {
 				int patient_id = Integer.parseInt(patientIDTF.getText().trim());
 				Patient p = searchForPatient(patient_id);
-				if (p == null)
+				if (p == null) {
+					statusL.setText("Patient not found");
 					return;
+				}
 				firstNameTF.setText(p.getFirst_name());
 				lastNameTF.setText(p.getLast_name());
 				genderCB.setValue((p.getGender() == "M") ? "Male" : "Female");
@@ -113,13 +113,14 @@ public class PatientsTab extends BorderPane {
 				phone_numberTF.setText(p.getPhone_number());
 				weightTF.setText(p.getWeight() + "");
 				heightTF.setText(p.getHeight() + "");
-
+				statusL.setText("Patient found");
 			} catch (Exception e1) {
-
+				statusL.setText("Patient not found");
 			}
 		});
 
 		addPatientBtn.setOnAction(e -> {
+			try {
 			int patient_id = Integer.parseInt(patientIDTF.getText().trim());
 			String first_name = firstNameTF.getText().trim();
 			String last_name = lastNameTF.getText().trim();
@@ -127,29 +128,29 @@ public class PatientsTab extends BorderPane {
 			String date_of_birth = dateOfBirthPicker.getValue().toString().replaceAll("/", "-");
 			String email_address = emailAddressTF.getText().trim();
 			String phone_number = phone_numberTF.getText().trim();
-			String gender = (genderCB.getValue().equals("Male")) ? "M" : "F";
+			String gender = (genderCB.getValue().toLowerCase().equals("male")) ? "M" : "F";
 			double height = Double.parseDouble(heightTF.getText().trim());
 			double weight = Double.parseDouble(weightTF.getText().trim());
 			addPatientToDB(patient_id, first_name, last_name, address, date_of_birth, email_address, phone_number,
 					gender, height, weight);
-			try {
-				patientsTV = createPatientsTable();
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+			addAllPatientsToTable(patientsTV);
+			statusL.setText("Patient has been added successfully");
 			}
-
+			catch(Exception e1 ) {
+				statusL.setText("An error occured while adding patient");
+			}
 		});
 
 		deletePatientBtn.setOnAction(e -> {
 			try {
 				int patient_id = Integer.parseInt(patientIDTF.getText().trim());
-				Connection connection = DriverManager.getConnection(Main.url, Main.username, Main.password);
-				Statement statement = connection.createStatement();
+				Statement statement = Main.connection.createStatement();
 				statement.executeUpdate("Delete from patient where patient_id = " + patient_id + ";");
-				patientsTV = createPatientsTable();
+				addAllPatientsToTable(patientsTV);
+				statusL.setText("Patient deleted successfully");
 			} catch (Exception e1) {
-
+				e1.printStackTrace();
+				statusL.setText("An error occured while deleting patient");
 			}
 
 		});
@@ -191,11 +192,13 @@ public class PatientsTab extends BorderPane {
 		HBox optionsHB = new HBox(addPatientBtn, deletePatientBtn);
 		optionsHB.setSpacing(15);
 		gp.add(optionsHB, 1, 10);
-		gp.add(editOrViewPatientsTable, 0, 14);
+		gp.add(editOrViewPatientsTable, 1, 11);
 		gp.setHgap(15);
 		gp.setVgap(15);
 		gp.setAlignment(Pos.CENTER);
 		setMargin(gp, new Insets(25));
+		setTop(statusL);
+		setAlignment(statusL, Pos.CENTER);
 		setLeft(gp);
 		setPadding(new Insets(15));
 
@@ -205,8 +208,7 @@ public class PatientsTab extends BorderPane {
 			String date_of_birth, String email_address, String phone_number, String gender, double height,
 			double weight) {
 		try {
-			Connection connection = DriverManager.getConnection(Main.url, Main.username, Main.password);
-			Statement statement = connection.createStatement();
+			Statement statement = Main.connection.createStatement();
 			statement.executeUpdate(
 					"insert into patient (patient_id,first_name,last_name,address,dob,email_address,phone_number,gender,weight,height) values ("
 							+ patient_id + ",'" + first_name + "','" + last_name + "','" + address + "','"
@@ -438,8 +440,7 @@ public class PatientsTab extends BorderPane {
 	public void addAllPatientsToTable(TableView<Patient> tv) {
 		tv.getItems().clear();
 		try {
-			Connection connection = DriverManager.getConnection(Main.url, Main.username, Main.password);
-			Statement statement = connection.createStatement();
+			Statement statement = Main.connection.createStatement();
 			ResultSet resultSet = statement.executeQuery("Select * from patient;");
 			ArrayList<Patient> patients = new ArrayList<Patient>();
 			while (resultSet.next()) {
@@ -466,8 +467,7 @@ public class PatientsTab extends BorderPane {
 
 	public Patient searchForPatient(int patient_id) {
 		try {
-			Connection connection = DriverManager.getConnection(Main.url, Main.username, Main.password);
-			Statement statement = connection.createStatement();
+			Statement statement = Main.connection.createStatement();
 			ResultSet resultSet = statement
 					.executeQuery("Select * from patient where patient_id = " + patient_id + ";");
 			if (resultSet.next()) {

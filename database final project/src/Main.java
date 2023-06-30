@@ -1,5 +1,7 @@
 
 
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 
 import atlantafx.base.theme.PrimerLight;
@@ -24,6 +26,8 @@ public class Main extends Application {
 	public static String port = "3306";
 	public static String dbName = "bzuClinic";
 	public static String url = "";
+	static 	Connection connection;
+
 	private static void decodePass() {
 		
 		StringBuilder sb = new StringBuilder("");
@@ -40,6 +44,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws SQLException {
     	decodePass();
     	url = "jdbc:mysql://" + ip + ":" + port + "/" + dbName;
+    	connection = DriverManager.getConnection(Main.url, Main.username, Main.password);
   
         // Create sidebar
         VBox sidebar = new VBox();
@@ -151,6 +156,7 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         primaryStage.setTitle("Birzeit University Clinic DBMS");
         primaryStage.show();
+        primaryStage.setResizable(false);
         dashBoardBtn.fire();
     }
 
