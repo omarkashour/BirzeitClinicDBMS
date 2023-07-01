@@ -66,10 +66,11 @@ public class PatientsTab extends BorderPane {
 	Button searchByIDBtn = new Button("Search by ID");
 	Button addPatientBtn = new Button("Add Patient");
 	Button deletePatientBtn = new Button("Delete Patient");
-	Button viewAlergiesBtn = new Button("View Allergies");
-	Button viewMedicationHistoryBtn = new Button("View Medication History");
-	Button viewSurgeriesBtn = new Button("View Previous Surgeries");
-	Button viewIlnessHistoryBtn = new Button("View Ilness History");
+	
+	Button viewMedicalRecordBtn = new Button("View Medical Record");
+
+	
+	static int current_id = -1; 
 	static TableView<Patient> patientsTV = new TableView<Patient>();
 	
 	public PatientsTab(Stage primaryStage, Scene scene) throws SQLException {
@@ -85,7 +86,7 @@ public class PatientsTab extends BorderPane {
 			addAllPatientsToTable(patientsTV);
 			patientsTV.setMinHeight(600);
 			Label titleL = new Label("Edit or View Patients Table (Double click to edit)");
-			titleL.setStyle("-fx-text-fill: white; -fx-font-size: 26px; -fx-font-weight: bold;");
+			titleL.setStyle("-fx-font-family: 'Product Sans'; -fx-text-fill: white;-fx-font-size: 27.0px; -fx-font-weight: bold;");
 			VBox tableVB = new VBox(titleL, patientsTV);
 			tableVB.setSpacing(10);
 			titleL.setAlignment(Pos.CENTER);
@@ -119,8 +120,10 @@ public class PatientsTab extends BorderPane {
 				Patient p = searchForPatient(patient_id);
 				if (p == null) {
 					statusL.setText("Patient not found");
+					current_id = -1;
 					return;
 				}
+				current_id = patient_id;
 				firstNameTF.setText(p.getFirst_name());
 				lastNameTF.setText(p.getLast_name());
 				if(p.getGender().equals("M")) {
@@ -155,8 +158,8 @@ public class PatientsTab extends BorderPane {
 					status = "Obesity";
 				}
 				StackPane bmiCard = createCard("Body Mass Index\nStatus: " + status,String.format("%.1f",bmi),"bmi.png");
-				GridPane gp = new GridPane();
-				gp.add(bmiCard, 0, 0);
+				GridPane rightGP = new GridPane();
+				rightGP.add(bmiCard, 0, 0);
 		        String birthdateString = p.getDate_of_birth();
 
 		        // Parse the birthdate string into a LocalDate object
@@ -167,18 +170,12 @@ public class PatientsTab extends BorderPane {
 		        // Calculate the period between the birthdate and current date
 		        Period period = Period.between(birthdate, currentDate);
 				StackPane ageCard = createCard("Patient's Age",period.getYears() + " years old" , "age.png");
-				viewMedicationHistoryBtn.setPrefHeight(50);
-				viewSurgeriesBtn.setPrefHeight(50);
-				viewIlnessHistoryBtn.setPrefHeight(50);
-				viewAlergiesBtn.setPrefHeight(50);
-				gp.add(ageCard, 1, 0);
-				gp.add(viewMedicationHistoryBtn, 0, 1);
-				gp.add(viewSurgeriesBtn, 1, 1);
-				gp.add(viewIlnessHistoryBtn, 0, 2);
-				gp.add(viewAlergiesBtn, 1, 2);
-				gp.setHgap(15);
-				gp.setVgap(15);
-				setRight(gp);
+				viewMedicalRecordBtn.setPrefHeight(50);
+				rightGP.add(ageCard, 1, 0);
+				rightGP.add(viewMedicalRecordBtn, 0, 1);
+				rightGP.setHgap(15);
+				rightGP.setVgap(15);
+				setRight(rightGP);
 			} catch (Exception e1) {
 				statusL.setText("Patient not found");
 			}
@@ -223,7 +220,61 @@ public class PatientsTab extends BorderPane {
 			}
 
 		});
-		GridPane gp = new GridPane();
+		
+		viewMedicalRecordBtn.setOnAction(e->{ // use rightGP
+			if(current_id == -1) return;
+				Label titleL = new Label("Medical Record Of Patient ID: " + current_id);
+				titleL.setStyle("-fx-font-family: 'Product Sans'; -fx-text-fill: white;-fx-font-size: 27.0px; -fx-font-weight: bold;");
+				TableView<MedicalRecord> medicationHistoryTV = new TableView<MedicalRecord>();
+				TableColumn<MedicalRecord,String> medicationHistoryColumn = new TableColumn<MedicalRecord,String>("medication_history");
+				medicationHistoryColumn.setCellValueFactory(new PropertyValueFactory<MedicalRecord,String>("medication_history"));
+				medicationHistoryTV.getColumns().add(medicationHistoryColumn);
+				medicationHistoryTV.setColumnResizePolicy(medicationHistoryTV.CONSTRAINED_RESIZE_POLICY);
+				
+				TableView<MedicalRecord> surgeriesTV = new TableView<MedicalRecord>();
+				
+				
+				TableView<MedicalRecord> illnessHistoryTV = new TableView<MedicalRecord>();
+				
+				
+				TableView<MedicalRecord> allergiesTV = new TableView<MedicalRecord>();
+				
+				
+				Label medicationlHistoryL = new Label("Medication History");
+				Label surgeriesL = new Label("Previous Surgeries");
+				Label illnessHistoryL = new Label("Illness History");
+				Label allergiesL = new Label("Allergies");
+				medicationlHistoryL.setStyle("-fx-font-family: 'Product Sans'; -fx-text-fill: white;-fx-font-size: 24.0px; -fx-font-weight: bold;");
+				surgeriesL.setStyle("-fx-font-family: 'Product Sans'; -fx-text-fill: white;-fx-font-size: 24.0px; -fx-font-weight: bold;");
+				illnessHistoryL.setStyle("-fx-font-family: 'Product Sans'; -fx-text-fill: white;-fx-font-size: 24.0px; -fx-font-weight: bold;");
+				allergiesL.setStyle("-fx-font-family: 'Product Sans'; -fx-text-fill: white;-fx-font-size: 24.0px; -fx-font-weight: bold;");
+				VBox vb1 = new VBox(medicationlHistoryL,medicationHistoryTV);
+				VBox vb2 = new VBox(surgeriesL,surgeriesTV);
+				VBox vb3 = new VBox(illnessHistoryL,illnessHistoryTV);
+				VBox vb4 = new VBox(allergiesL,allergiesTV);
+				
+				HBox tablesHB = new HBox(vb1,vb2,vb3,vb4);
+				tablesHB.setAlignment(Pos.CENTER);
+				tablesHB.setSpacing(15);
+				VBox tableVB = new VBox(titleL, tablesHB);
+				tableVB.setSpacing(15);
+				titleL.setAlignment(Pos.CENTER);
+				tableVB.setAlignment(Pos.CENTER);
+				Stage popupStage = new Stage();
+				popupStage.setTitle("Patient's Medication History");
+				BorderPane contentPane = new BorderPane();
+				contentPane.setStyle("-fx-background-color: #FCAEAE;");
+				contentPane.setCenter(tableVB);
+				contentPane.setPadding(new Insets(20));
+				Scene popupScene = new Scene(contentPane, 1100, 700);
+//				popupScene.getStylesheets().add("style.css");
+				popupScene.setUserAgentStylesheet(new PrimerLight().getUserAgentStylesheet());
+				popupStage.setScene(popupScene);
+				popupStage.show();
+
+		});
+		
+		
 		firstNameL.setStyle("-fx-text-fill: white; -fx-font-size: 22px; -fx-font-weight: bold;");
 		lastNameL.setStyle("-fx-text-fill: white; -fx-font-size: 22px; -fx-font-weight: bold;");
 		genderL.setStyle("-fx-text-fill: white; -fx-font-size: 22px; -fx-font-weight: bold;");
@@ -233,7 +284,7 @@ public class PatientsTab extends BorderPane {
 		patientIDL.setStyle("-fx-text-fill: white; -fx-font-size: 22px; -fx-font-weight: bold;");
 		heightL.setStyle("-fx-text-fill: white; -fx-font-size: 22px; -fx-font-weight: bold;");
 		weightL.setStyle("-fx-text-fill: white; -fx-font-size: 22px; -fx-font-weight: bold;");
-		
+		GridPane gp = new GridPane();
 		gp.add(statusL, 1, 0);
 		gp.add(patientIDL, 0, 1);
 		gp.add(firstNameL, 0, 2);
