@@ -44,8 +44,6 @@ public class Main extends Application {
 	
     @Override
     public void start(Stage primaryStage) throws SQLException {
-        Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
-        System.out.println(primaryScreenBounds.getWidth());
     	
     	decodePass();
     	url = "jdbc:mysql://" + ip + ":" + port + "/" + dbName;
@@ -122,7 +120,7 @@ public class Main extends Application {
         closeBtn.setOnAction(e->{
         	primaryStage.close();
         });
-        Scene scene = new Scene(root,primaryScreenBounds.getWidth()/1.3,primaryScreenBounds.getHeight()/1.3);
+        Scene scene = new Scene(root,1350,750);
 
         DashBoard dashboard = new DashBoard(primaryStage,scene);
         

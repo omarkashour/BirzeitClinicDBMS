@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
+import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
@@ -21,10 +22,16 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.converter.IntegerStringConverter;
 
@@ -39,8 +46,8 @@ public class PatientsTab extends BorderPane {
 	Label addressL = new Label("Address:");
 	Label emailAddressL = new Label("Email Address:");
 	Label patientIDL = new Label("Patient ID:");
-	Label weightL = new Label("Weight:");
-	Label heightL = new Label("Height:");
+	Label weightL = new Label("Weight (kg):");
+	Label heightL = new Label("Height (cm):");
 	Label phoneL = new Label("Phone Number:");
 	Label statusL = new Label("");
 
@@ -103,8 +110,13 @@ public class PatientsTab extends BorderPane {
 				}
 				firstNameTF.setText(p.getFirst_name());
 				lastNameTF.setText(p.getLast_name());
-				genderCB.setValue((p.getGender() == "M") ? "Male" : "Female");
-				String dateString = "2023-06-30";
+				if(p.getGender().equals("M")) {
+					genderCB.setValue("Male");
+				}
+				else if(p.getGender().equals("F")) {
+					genderCB.setValue("Female");
+				}
+				String dateString = p.getDate_of_birth();
 				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 				LocalDate date = LocalDate.parse(dateString, formatter);
 				dateOfBirthPicker.setValue(date);
@@ -114,6 +126,37 @@ public class PatientsTab extends BorderPane {
 				weightTF.setText(p.getWeight() + "");
 				heightTF.setText(p.getHeight() + "");
 				statusL.setText("Patient found");
+				double bmi = 10000*(p.getWeight()/(p.getHeight() * p.getHeight()));
+//				16 -> 18.4 under weight,   18.5 -> 24 normal , 25 -> 29 overweight , bmi > 29 obesity
+				String status = "";
+				if(bmi >= 16 && bmi < 18.5 ) {
+					status = "Under Weight";
+				}
+				else if(bmi >= 18.5 && bmi < 25) {
+					status = "Normal";
+				}
+				else if(bmi >= 25 && bmi < 30) {
+					status = "Over Weight";
+				}
+				else if(bmi >= 30) {
+					status = "Obesity";
+				}
+				StackPane bmiCard = createCard("Body Mass Index\nStatus: " + status,String.format("%.1f",bmi),"bmi.png");
+				GridPane gp = new GridPane();
+				gp.add(bmiCard, 0, 0);
+		        String birthdateString = p.getDate_of_birth();
+
+		        // Parse the birthdate string into a LocalDate object
+		        LocalDate birthdate = LocalDate.parse(birthdateString);
+
+		        // Get the current date
+		        LocalDate currentDate = LocalDate.now();
+		        // Calculate the period between the birthdate and current date
+		        Period period = Period.between(birthdate, currentDate);
+				StackPane ageCard = createCard("Patient's Age",period.getYears() + " years old" , "age.png");
+				gp.add(ageCard, 1, 0);
+				gp.setHgap(15);
+				setRight(gp);
 			} catch (Exception e1) {
 				statusL.setText("Patient not found");
 			}
@@ -128,7 +171,11 @@ public class PatientsTab extends BorderPane {
 			String date_of_birth = dateOfBirthPicker.getValue().toString().replaceAll("/", "-");
 			String email_address = emailAddressTF.getText().trim();
 			String phone_number = phone_numberTF.getText().trim();
-			String gender = (genderCB.getValue().toLowerCase().equals("male")) ? "M" : "F";
+			String gender = "";
+			if(genderCB.getValue().toLowerCase().equals("male")) 
+				gender = "M";
+			else
+				gender = "F";
 			double height = Double.parseDouble(heightTF.getText().trim());
 			double weight = Double.parseDouble(weightTF.getText().trim());
 			addPatientToDB(patient_id, first_name, last_name, address, date_of_birth, email_address, phone_number,
@@ -165,39 +212,40 @@ public class PatientsTab extends BorderPane {
 		heightL.setStyle("-fx-text-fill: white; -fx-font-size: 22px; -fx-font-weight: bold;");
 		weightL.setStyle("-fx-text-fill: white; -fx-font-size: 22px; -fx-font-weight: bold;");
 
-		gp.add(patientIDL, 0, 0);
-		gp.add(firstNameL, 0, 1);
-		gp.add(lastNameL, 0, 2);
-		gp.add(genderL, 0, 3);
-		gp.add(dateOfBirthL, 0, 4);
-		gp.add(heightL, 0, 5);
-		gp.add(weightL, 0, 6);
-		gp.add(addressL, 0, 7);
-		gp.add(emailAddressL, 0, 8);
-		gp.add(phoneL, 0, 9);
+		gp.add(statusL, 1, 0);
+		gp.add(patientIDL, 0, 1);
+		gp.add(firstNameL, 0, 2);
+		gp.add(lastNameL, 0, 3);
+		gp.add(genderL, 0, 4);
+		gp.add(dateOfBirthL, 0, 5);
+		gp.add(heightL, 0, 6);
+		gp.add(weightL, 0, 7);
+		gp.add(addressL, 0, 8);
+		gp.add(emailAddressL, 0, 9);
+		gp.add(phoneL, 0, 10);
 
-		gp.add(patientIDTF, 1, 0);
-		gp.add(firstNameTF, 1, 1);
-		gp.add(lastNameTF, 1, 2);
-		gp.add(genderCB, 1, 3);
-		gp.add(dateOfBirthPicker, 1, 4);
-		gp.add(heightTF, 1, 5);
-		gp.add(weightTF, 1, 6);
-		gp.add(addressTF, 1, 7);
-		gp.add(emailAddressTF, 1, 8);
-		gp.add(phone_numberTF, 1, 9);
+		gp.add(patientIDTF, 1, 1);
+		gp.add(firstNameTF, 1, 2);
+		gp.add(lastNameTF, 1, 3);
+		gp.add(genderCB, 1, 4);
+		gp.add(dateOfBirthPicker, 1, 5);
+		gp.add(heightTF, 1, 6);
+		gp.add(weightTF, 1, 7);
+		gp.add(addressTF, 1, 8);
+		gp.add(emailAddressTF, 1, 9);
+		gp.add(phone_numberTF, 1, 10);
 
-		gp.add(searchByIDBtn, 2, 0);
-
+		gp.add(searchByIDBtn, 2, 1);
+	
+		// BIM
 		HBox optionsHB = new HBox(addPatientBtn, deletePatientBtn);
 		optionsHB.setSpacing(15);
-		gp.add(optionsHB, 1, 10);
-		gp.add(editOrViewPatientsTable, 1, 11);
+		gp.add(optionsHB, 1, 11);
+		gp.add(editOrViewPatientsTable, 1, 12);
 		gp.setHgap(15);
 		gp.setVgap(15);
 		gp.setAlignment(Pos.CENTER);
 		setMargin(gp, new Insets(25));
-		setTop(statusL);
 		setAlignment(statusL, Pos.CENTER);
 		setLeft(gp);
 		setPadding(new Insets(15));
@@ -481,7 +529,7 @@ public class PatientsTab extends BorderPane {
 				double height = resultSet.getDouble("height");
 				double weight = resultSet.getDouble("weight");
 				return new Patient(patient_id, first_name, last_name, address, date_of_birth, email_address,
-						phone_number, gender, height, weight);
+						phone_number, gender, weight,height);
 			}
 
 		} catch (Exception e) {
@@ -489,4 +537,53 @@ public class PatientsTab extends BorderPane {
 		}
 		return null;
 	}
+	
+	public StackPane createCard(String label1Text, String label2Text, String imagePath) {
+	    HBox card = new HBox(20);
+	    card.setPadding(new Insets(15)); // Increase padding for a larger card
+	    card.setAlignment(Pos.CENTER);
+	    card.setPrefSize(250, 200); // Increase width and height for a larger card
+	    card.setStyle("-fx-border-color: #FF6666; -fx-border-width: 2px; -fx-border-radius: 15px;");
+
+	    VBox contentBox = new VBox(30);
+	    contentBox.setAlignment(Pos.CENTER_LEFT);
+
+	    Label label1 = new Label(label1Text);
+	    label1.setStyle("-fx-font-size: 18px; -fx-text-fill: #000000;");
+
+	    Label label2 = new Label(label2Text);
+	    label2.setStyle("-fx-font-size: 24px; -fx-text-fill: #000000; -fx-font-weight: bold;");
+
+	    ImageView imageView = new ImageView(new Image(imagePath));
+	    imageView.setFitWidth(80); // Increase width for a larger image
+	    imageView.setPreserveRatio(true);
+	   HBox iconAndPriceHB = new HBox(imageView,label2);
+	   iconAndPriceHB.setAlignment(Pos.CENTER);
+	   iconAndPriceHB.setSpacing(20);
+	    contentBox.getChildren().addAll(iconAndPriceHB, label1);
+	    contentBox.setAlignment(Pos.CENTER);
+//	    card.getChildren().addAll(contentBox, label2);
+
+	    Rectangle rec = new Rectangle();
+	    rec.setFill(Color.WHITE);
+	    rec.setWidth(250); // Increase width for a larger card
+	    rec.setHeight(200); // Increase height for a larger card
+	    rec.setArcWidth(32);
+	    rec.setArcHeight(32);
+	    rec.setStroke(Color.web("#FF8989")); // Set the stroke color
+	    rec.setStrokeWidth(4); // Set the stroke width
+	    
+	    StackPane overall = new StackPane();
+	    overall.getChildren().addAll(rec, contentBox);
+	    // Add drop shadow effect to the StackPane
+	    DropShadow dropShadow = new DropShadow();
+	    dropShadow.setColor(Color.web("#454545"));
+	    dropShadow.setRadius(5);
+	    dropShadow.setOffsetX(0);
+	    dropShadow.setOffsetY(2);
+	    overall.setEffect(dropShadow);
+
+	    return overall;
+	}
+
 }
