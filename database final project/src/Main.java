@@ -16,6 +16,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
@@ -29,6 +30,8 @@ public class Main extends Application {
 	public static String dbName = "bzuClinic";
 	public static String url = "";
 	static 	Connection connection;
+	Font customFontRegular = Font.loadFont(Main.class.getResourceAsStream("/Product Sans Regular.ttf"), 18);
+	Font customFontBold = Font.loadFont(Main.class.getResourceAsStream("/Product Sans Bold.ttf"), 18);
 
 	private static void decodePass() {
 		
@@ -44,6 +47,8 @@ public class Main extends Application {
 	
     @Override
     public void start(Stage primaryStage) throws SQLException {
+    	System.out.println(customFontRegular);
+    	System.out.println(customFontBold);
     	decodePass();
     	url = "jdbc:mysql://" + ip + ":" + port + "/" + dbName;
     	connection = DriverManager.getConnection(Main.url, Main.username, Main.password);
@@ -107,9 +112,9 @@ public class Main extends Application {
         
         Button logoBtn = new Button("Birzeit Clinic");
         logoBtn.setGraphic(clinicIconView);
-        logoBtn.setMaxWidth(169.75);
+        logoBtn.setMaxWidth(169);
         logoBtn.setStyle("-fx-background-color: #FF8989; -fx-text-fill: white; -fx-font-size: 17px; -fx-background-radius: 0px; -fx-font-weight: bold;");
-        
+       
         BorderPane root = new BorderPane();
         root.setLeft(sidebar);
         root.setStyle("-fx-background-color: #FCAEAE;");

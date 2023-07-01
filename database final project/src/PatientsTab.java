@@ -201,7 +201,7 @@ public class PatientsTab extends BorderPane {
 			double height = Double.parseDouble(heightTF.getText().trim());
 			double weight = Double.parseDouble(weightTF.getText().trim());
 			addPatientToDB(patient_id, first_name, last_name, address, date_of_birth, email_address, phone_number,
-					gender, height, weight);
+					gender, weight,height);
 			addAllPatientsToTable(patientsTV);
 			statusL.setText("Patient has been added successfully");
 			}
@@ -233,7 +233,7 @@ public class PatientsTab extends BorderPane {
 		patientIDL.setStyle("-fx-text-fill: white; -fx-font-size: 22px; -fx-font-weight: bold;");
 		heightL.setStyle("-fx-text-fill: white; -fx-font-size: 22px; -fx-font-weight: bold;");
 		weightL.setStyle("-fx-text-fill: white; -fx-font-size: 22px; -fx-font-weight: bold;");
-
+		
 		gp.add(statusL, 1, 0);
 		gp.add(patientIDL, 0, 1);
 		gp.add(firstNameL, 0, 2);
@@ -281,7 +281,7 @@ public class PatientsTab extends BorderPane {
 			Statement statement = Main.connection.createStatement();
 			statement.executeUpdate(
 					"insert into patient (patient_id,first_name,last_name,address,dob,email_address,phone_number,gender,weight,height) values ("
-							+ patient_id + ",'" + first_name + "','" + last_name + "','" + address + "','"
+							+ patient_id + ",\"" + first_name + "\",'" + last_name + "','" + address + "','"
 							+ date_of_birth + "','" + email_address + "','" + phone_number + "','" + gender + "',"
 							+ height + "," + weight + ");");
 		} catch (SQLException e) {

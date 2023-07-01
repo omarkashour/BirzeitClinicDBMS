@@ -9,6 +9,7 @@
 }
 
 .button {
+	-fx-font-family: 'Product Sans';
     -fx-background-color: -color-tertiary;
     -fx-text-fill: white;
     -fx-font-size: 14.0px;
@@ -22,7 +23,7 @@
 }
 
 .label {
-  -fx-font-family: 'Roboto', sans-serif; /* Set the font to Roboto */
+  -fx-font-family: 'Product Sans'; /* Set the font to Roboto */
   -fx-text-fill: white;
    -fx-font-size: 22.0px;
     -fx-font-weight: bold;
@@ -214,4 +215,5 @@
     -fx-text-fill: black; /* Set the text color */
         -fx-font-weight: normal;
 }
+
 
