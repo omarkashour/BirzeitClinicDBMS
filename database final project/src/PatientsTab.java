@@ -66,6 +66,10 @@ public class PatientsTab extends BorderPane {
 	Button searchByIDBtn = new Button("Search by ID");
 	Button addPatientBtn = new Button("Add Patient");
 	Button deletePatientBtn = new Button("Delete Patient");
+	Button viewAlergiesBtn = new Button("View Allergies");
+	Button viewMedicationHistoryBtn = new Button("View Medication History");
+	Button viewSurgeriesBtn = new Button("View Previous Surgeries");
+	Button viewIlnessHistoryBtn = new Button("View Ilness History");
 	static TableView<Patient> patientsTV = new TableView<Patient>();
 	
 	public PatientsTab(Stage primaryStage, Scene scene) throws SQLException {
@@ -76,7 +80,7 @@ public class PatientsTab extends BorderPane {
 		});
 
 		patientsTV = createPatientsTable();
-
+		editOrViewPatientsTable.setPrefHeight(50);
 		editOrViewPatientsTable.setOnAction(e -> {
 			addAllPatientsToTable(patientsTV);
 			patientsTV.setMinHeight(600);
@@ -101,6 +105,15 @@ public class PatientsTab extends BorderPane {
 		});
 
 		searchByIDBtn.setOnAction(e -> {
+			firstNameTF.setText("");
+			lastNameTF.setText("");
+			dateOfBirthPicker.setValue(null);
+			emailAddressTF.setText("");
+			addressTF.setText("");
+			phone_numberTF.setText("");
+			weightTF.setText("");
+			heightTF.setText("");
+			genderCB.setValue(null);
 			try {
 				int patient_id = Integer.parseInt(patientIDTF.getText().trim());
 				Patient p = searchForPatient(patient_id);
@@ -154,8 +167,17 @@ public class PatientsTab extends BorderPane {
 		        // Calculate the period between the birthdate and current date
 		        Period period = Period.between(birthdate, currentDate);
 				StackPane ageCard = createCard("Patient's Age",period.getYears() + " years old" , "age.png");
+				viewMedicationHistoryBtn.setPrefHeight(50);
+				viewSurgeriesBtn.setPrefHeight(50);
+				viewIlnessHistoryBtn.setPrefHeight(50);
+				viewAlergiesBtn.setPrefHeight(50);
 				gp.add(ageCard, 1, 0);
+				gp.add(viewMedicationHistoryBtn, 0, 1);
+				gp.add(viewSurgeriesBtn, 1, 1);
+				gp.add(viewIlnessHistoryBtn, 0, 2);
+				gp.add(viewAlergiesBtn, 1, 2);
 				gp.setHgap(15);
+				gp.setVgap(15);
 				setRight(gp);
 			} catch (Exception e1) {
 				statusL.setText("Patient not found");

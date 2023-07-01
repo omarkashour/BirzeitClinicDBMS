@@ -44,7 +44,6 @@ public class Main extends Application {
 	
     @Override
     public void start(Stage primaryStage) throws SQLException {
-    	
     	decodePass();
     	url = "jdbc:mysql://" + ip + ":" + port + "/" + dbName;
     	connection = DriverManager.getConnection(Main.url, Main.username, Main.password);
