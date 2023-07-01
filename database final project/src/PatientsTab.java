@@ -230,15 +230,49 @@ public class PatientsTab extends BorderPane {
 				medicationHistoryColumn.setCellValueFactory(new PropertyValueFactory<MedicalRecord,String>("medication_history"));
 				medicationHistoryTV.getColumns().add(medicationHistoryColumn);
 				medicationHistoryTV.setColumnResizePolicy(medicationHistoryTV.CONSTRAINED_RESIZE_POLICY);
+				medicationHistoryTV.setStyle("-fx-background-color: #FFEADD;");
 				
 				TableView<MedicalRecord> surgeriesTV = new TableView<MedicalRecord>();
-				
+				TableColumn<MedicalRecord,String> surgeriesColumn = new TableColumn<MedicalRecord,String>("surgeries");
+				surgeriesColumn.setCellValueFactory(new PropertyValueFactory<MedicalRecord,String>("surgeries"));
+				surgeriesTV.getColumns().add(surgeriesColumn);
+				surgeriesTV.setColumnResizePolicy(surgeriesTV.CONSTRAINED_RESIZE_POLICY);
+				surgeriesTV.setStyle("-fx-background-color: #FFEADD;");
 				
 				TableView<MedicalRecord> illnessHistoryTV = new TableView<MedicalRecord>();
-				
+				TableColumn<MedicalRecord,String> illnessHistoryColumn = new TableColumn<MedicalRecord,String>("illness_history");
+				illnessHistoryColumn.setCellValueFactory(new PropertyValueFactory<MedicalRecord,String>("illness_history"));
+				illnessHistoryTV.getColumns().add(illnessHistoryColumn);
+				illnessHistoryTV.setColumnResizePolicy(surgeriesTV.CONSTRAINED_RESIZE_POLICY);
+				illnessHistoryTV.setStyle("-fx-background-color: #FFEADD;");
 				
 				TableView<MedicalRecord> allergiesTV = new TableView<MedicalRecord>();
-				
+				TableColumn<MedicalRecord,String> allergiesColumn = new TableColumn<MedicalRecord,String>("allergies");
+				allergiesColumn.setCellValueFactory(new PropertyValueFactory<MedicalRecord,String>("allergies"));
+				allergiesTV.getColumns().add(allergiesColumn);
+				allergiesTV.setColumnResizePolicy(allergiesTV.CONSTRAINED_RESIZE_POLICY);
+				allergiesTV.setStyle("-fx-background-color: #FFEADD;");
+				try {
+					Statement statement = Main.connection.createStatement();
+					ResultSet res = statement.executeQuery("select * from medical_record where patient_id = " + current_id + ";");
+					if(res.next()) {
+						String[]  illness_history = res.getString("illness_history").split(",");
+						String[]	allergies = res.getString("allergies").split(",");
+						String[] surgeries = res.getString("surgeries").split(",");
+						String[]	medication_history = res.getString("medication_history").split(",");
+						for(int i = 0 ; i < medication_history.length ; i++)
+						medicationHistoryTV.getItems().add(new MedicalRecord(-1, -1, "", "", "", medication_history[i]));
+						for(int i = 0 ; i < surgeries.length ; i++)
+							surgeriesTV.getItems().add(new MedicalRecord(-1, -1, "", "", surgeries[i], ""));
+						for(int i = 0 ; i < illness_history.length ; i++)
+							illnessHistoryTV.getItems().add(new MedicalRecord(-1, -1, illness_history[i], "", "", ""));
+						for(int i = 0 ; i < allergies.length ; i++)
+							allergiesTV.getItems().add(new MedicalRecord(-1, -1, "", allergies[i], "", ""));
+					}
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				
 				Label medicationlHistoryL = new Label("Medication History");
 				Label surgeriesL = new Label("Previous Surgeries");
