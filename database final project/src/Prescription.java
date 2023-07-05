@@ -17,6 +17,16 @@ public class Prescription {
 		this.dosage = dosage;
 		this.frequency = frequency;
 	}
+	public Prescription( int patient_id, int phys_id, String medication_name, String dosage,
+			String frequency) {
+		super();
+		this.pr_id = pr_id;
+		this.patient_id = patient_id;
+		this.phys_id = phys_id;
+		this.medication_name = medication_name;
+		this.dosage = dosage;
+		this.frequency = frequency;
+	}
 
 	public int getPr_id() {
 		return pr_id;

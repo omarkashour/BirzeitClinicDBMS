@@ -30,11 +30,15 @@ import javafx.stage.Stage;
 
 public class DashBoard extends BorderPane {
 	HBox tablesHB = new HBox();
+	static String totalPatients = "";
+	static String averageCost = "";
+	static String currentMonthProfit = "";
+	static String currentYearProfit = "";
 
+	static GridPane gp = new GridPane();
 	public DashBoard(Stage primaryStage, Scene scene) {
 		
-		GridPane gp = new GridPane();
-		String totalPatients = "";
+		 totalPatients = "";
 		try {
 			totalPatients = getTotalPatients() + "";
 		} catch (SQLException e) {
@@ -42,15 +46,15 @@ public class DashBoard extends BorderPane {
 			e.printStackTrace();
 		}
 
-		String averageCost = "";
+		 averageCost = "";
 		try {
-			averageCost = "\u20AA" + getAverageCost();
+			averageCost = "\u20AA" + String.format("%.1f",getAverageCost());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		String currentMonthProfit = "";
+		 currentMonthProfit = "";
 		try {
 			currentMonthProfit = "\u20AA" + getCurrentMonthProfit();
 		} catch (SQLException e) {
@@ -58,7 +62,7 @@ public class DashBoard extends BorderPane {
 			e.printStackTrace();
 		}
 
-		String currentYearProfit = "";
+		 currentYearProfit = "";
 		try {
 			currentYearProfit = "\u20AA" + getCurrentYearProfit();
 		} catch (SQLException e) {
@@ -90,6 +94,46 @@ public class DashBoard extends BorderPane {
 		setTop(gp);
 		
 	}
+	public static void refreshDashBoard() {
+		gp.getChildren().clear();
+		try {
+			totalPatients = getTotalPatients() + "";
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		try {
+			averageCost = "\u20AA" + String.format("%.1f",getAverageCost());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		try {
+			currentMonthProfit = "\u20AA" + getCurrentMonthProfit();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		try {
+			currentYearProfit = "\u20AA" + getCurrentYearProfit();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		StackPane totalPatientsCard = createCard("Total Patients", totalPatients, "heart-red.png");
+		StackPane averageCostCard = createCard("Overall Average Cost", averageCost, "health-checkup.png");
+		StackPane currentMonthProfitCard = createCard("Current Month Profit", currentMonthProfit, "money-month.png");
+		StackPane currentYearProfitCard = createCard("Current Year Profit", currentYearProfit, "money-year.png");
+
+		gp.add(totalPatientsCard, 0, 0);
+		gp.add(averageCostCard, 1, 0);
+		gp.add(currentMonthProfitCard, 2, 0);
+		gp.add(currentYearProfitCard, 3, 0);
+	}
 
 	private LineChart<String,Number> createMaleFemaleChart() throws SQLException { // Create the x-axis (category axis)
 		Connection connection = DriverManager.getConnection(Main.url, Main.username, Main.password);
@@ -108,7 +152,7 @@ public class DashBoard extends BorderPane {
 		LineChart<String, Number> chart = new LineChart<>(xAxis, yAxis);
 
 		// Set chart title and axis labels
-		chart.setTitle("Patient Visits by Gender");
+		chart.setTitle("Patient Visits By Gender During The Year " + year);
 		xAxis.setLabel("Month");
 		yAxis.setLabel("Number of Visits");
 		yAxis.setTickUnit(1);
@@ -174,7 +218,7 @@ public class DashBoard extends BorderPane {
 		return chart;
 	}
 
-	private double getCurrentYearProfit() throws SQLException {
+	public static double getCurrentYearProfit() throws SQLException {
 		Connection connection = DriverManager.getConnection(Main.url, Main.username, Main.password);
 		Statement statement = connection.createStatement();
 		Calendar c = Calendar.getInstance();
@@ -189,7 +233,7 @@ public class DashBoard extends BorderPane {
 		return res;
 	}
 
-	private double getCurrentMonthProfit() throws SQLException {
+	public static double getCurrentMonthProfit() throws SQLException {
 		Connection connection = DriverManager.getConnection(Main.url, Main.username, Main.password);
 		Statement statement = connection.createStatement();
 		Calendar c = Calendar.getInstance();
@@ -207,7 +251,7 @@ public class DashBoard extends BorderPane {
 		return res;
 	}
 
-	private double getAverageCost() throws SQLException {
+	public static double getAverageCost() throws SQLException {
 		Connection connection = DriverManager.getConnection(Main.url, Main.username, Main.password);
 		Statement statement = connection.createStatement();
 		ResultSet resultSet = statement.executeQuery("Select AVG(cost) from appointment;");
@@ -218,7 +262,7 @@ public class DashBoard extends BorderPane {
 		return res;
 	}
 
-	private long getTotalPatients() throws SQLException {
+	public static long getTotalPatients() throws SQLException {
 		Connection connection = DriverManager.getConnection(Main.url, Main.username, Main.password);
 		Statement statement = connection.createStatement();
 		ResultSet resultSet = statement.executeQuery("Select count(*) from patient;");
@@ -229,7 +273,7 @@ public class DashBoard extends BorderPane {
 		return res;
 	}
 
-	public StackPane createCard(String label1Text, String label2Text, String imagePath) {
+	public static StackPane createCard(String label1Text, String label2Text, String imagePath) {
 	    HBox card = new HBox(20);
 	    card.setPadding(new Insets(15)); // Increase padding for a larger card
 	    card.setAlignment(Pos.CENTER);

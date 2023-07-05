@@ -24,7 +24,7 @@
 
 .label {
   -fx-font-family: 'Product Sans'; /* Set the font to Roboto */
-  -fx-text-fill: white;
+  -fx-text-fill: black;
    -fx-font-size: 22.0px;
     -fx-font-weight: bold;
 }

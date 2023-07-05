@@ -1,7 +1,7 @@
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
-public class Appointment implements Comparable<Appointment> {
+import java.time.LocalDate;
+
+public class Appointment {
 	private int ap_id;
 	private int patient_id;
 	private int phys_id;
@@ -11,11 +11,30 @@ public class Appointment implements Comparable<Appointment> {
 	private String status;
 	private double cost;
 	private String duration;
+	
+
+	public Appointment() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	public Appointment(int ap_id, int patient_id, int phys_id, String ap_reason, String ap_date, String ap_time,
 			String status, double cost, String duration) {
 		super();
 		this.ap_id = ap_id;
+		this.patient_id = patient_id;
+		this.phys_id = phys_id;
+		this.ap_reason = ap_reason;
+		this.ap_date = ap_date;
+		this.ap_time = ap_time;
+		this.status = status;
+		this.cost = cost;
+		this.duration = duration;
+	}
+	public Appointment(int patient_id, int phys_id, String ap_reason, String ap_date, String ap_time,
+			String status, double cost, String duration) {
+		super();
+		
 		this.patient_id = patient_id;
 		this.phys_id = phys_id;
 		this.ap_reason = ap_reason;
@@ -99,18 +118,10 @@ public class Appointment implements Comparable<Appointment> {
 	}
 
 	@Override
-	public int compareTo(Appointment o) {
-		   SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		    try {
-		        Date thisDate = dateFormat.parse(this.ap_date);
-		        Date otherDate = dateFormat.parse(o.ap_date);
-		        return thisDate.compareTo(otherDate);
-		    } catch (Exception e) {
-		        e.printStackTrace();
-		    }
-		    return 0;
+	public String toString() {
+		// TODO Auto-generated method stub
+		return (this.ap_id+this.ap_reason);
 	}
-	
 	
 
 }

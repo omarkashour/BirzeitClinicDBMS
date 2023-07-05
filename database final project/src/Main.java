@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.List;
 
+import atlantafx.base.theme.PrimerLight;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -111,7 +112,7 @@ public class Main extends Application {
         
         Button logoBtn = new Button("Birzeit Clinic");
         logoBtn.setGraphic(clinicIconView);
-        logoBtn.setMaxWidth(169);
+        logoBtn.setMaxWidth(174);
         logoBtn.setStyle("-fx-background-color: #FF8989; -fx-text-fill: white; -fx-font-size: 17px; -fx-background-radius: 0px; -fx-font-weight: bold;");
        
         BorderPane root = new BorderPane();
@@ -139,14 +140,16 @@ public class Main extends Application {
         	root.setCenter(patients);
         });
 
+        AppointmentScene appointment = new AppointmentScene();
         appointmentsBtn.setOnAction(e -> {
         	root.setCenter(null);
-
+        	root.setCenter(appointment);
         });
         
+        PrescriptionScene prescription = new PrescriptionScene();
         prescriptionsBtn.setOnAction(e->{
         	root.setCenter(null);
-
+        	root.setCenter(prescription);
         });
         
         PhysicianPage physicians = new PhysicianPage();
@@ -156,7 +159,7 @@ public class Main extends Application {
 
         });
 
-//		Application.setUserAgentStylesheet(new PrimerLight().getUserAgentStylesheet());
+		Application.setUserAgentStylesheet(new PrimerLight().getUserAgentStylesheet());
         scene.getStylesheets().add("style.css");
 //        primaryStage.setFullScreen(true);
         primaryStage.setScene(scene);

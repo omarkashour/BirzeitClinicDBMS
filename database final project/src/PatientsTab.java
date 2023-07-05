@@ -79,7 +79,8 @@ public class PatientsTab extends BorderPane {
 			LocalDate selectedDate = dateOfBirthPicker.getValue();
 
 		});
-
+		phoneL.setStyle("-fx-font-family: 'Product Sans'; -fx-text-fill: white;-fx-font-size: 22.0px; -fx-font-weight: bold;");
+		statusL.setStyle("-fx-text-fill: white; -fx-font-size: 22px; -fx-font-weight: bold;");
 		patientsTV = createPatientsTable();
 		editOrViewPatientsTable.setPrefHeight(50);
 		editOrViewPatientsTable.setOnAction(e -> {

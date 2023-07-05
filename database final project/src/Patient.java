@@ -10,6 +10,9 @@ public class Patient implements Comparable<Patient> {
 	private double weight;
 	private double height;
 
+	public Patient() {
+		
+	}
 	public Patient(int patient_id, String first_name, String last_name, String address, String date_of_birth,
 			String email_address, String phone_number, String gender, double weight, double height) {
 		super();
