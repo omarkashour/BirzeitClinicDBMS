@@ -20,6 +20,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class Main extends Application {
 
@@ -48,7 +49,7 @@ public class Main extends Application {
 	
     @Override
     public void start(Stage primaryStage) throws SQLException {
-
+//    	primaryStage.initStyle(StageStyle.TRANSPARENT);
     	decodePass();
     	url = "jdbc:mysql://" + ip + ":" + port + "/" + dbName;
     	connection = DriverManager.getConnection(Main.url, Main.username, Main.password);
@@ -89,25 +90,34 @@ public class Main extends Application {
         physicianIconView.setFitHeight(24);
         physicianIconView.setFitWidth(24);
         
+        Image reportsIcon = new Image("reports.png");
+        ImageView reportsIconView = new ImageView(reportsIcon);
+        reportsIconView.setFitHeight(24);
+        reportsIconView.setFitWidth(24);
+        
         Button dashBoardBtn = new Button("Dashboard");
         Button patientsBtn = new Button("Patients");
         Button appointmentsBtn = new Button("Appointments");
         Button prescriptionsBtn = new Button("Prescriptions");
         Button physiciansBtn = new Button("Physicians");
+        Button reportBtn = new Button("Reports");
+
 
         dashBoardBtn.getStyleClass().add("navigation-button");
         patientsBtn.getStyleClass().add("navigation-button");
         appointmentsBtn.getStyleClass().add("navigation-button");
         prescriptionsBtn.getStyleClass().add("navigation-button");
         physiciansBtn.getStyleClass().add("navigation-button");
+        reportBtn.getStyleClass().add("navigation-button");
         
         dashBoardBtn.setGraphic(dashboardIconView);
         patientsBtn.setGraphic(patientIconView);
         appointmentsBtn.setGraphic(appointmentIconView);
         prescriptionsBtn.setGraphic(prescriptionIconView);
         physiciansBtn.setGraphic(physicianIconView);
+        reportBtn.setGraphic(reportsIconView);
         
-        sidebar.getChildren().addAll(dashBoardBtn, patientsBtn, appointmentsBtn,prescriptionsBtn,physiciansBtn);
+        sidebar.getChildren().addAll(dashBoardBtn, patientsBtn, appointmentsBtn,prescriptionsBtn,physiciansBtn,reportBtn);
 
         
         Button logoBtn = new Button("Birzeit Clinic");
@@ -124,7 +134,7 @@ public class Main extends Application {
         closeBtn.setOnAction(e->{
         	primaryStage.close();
         });
-        Scene scene = new Scene(root,1350,750);
+        Scene scene = new Scene(root,1400,800);
 
         DashBoard dashboard = new DashBoard(primaryStage,scene);
         
@@ -159,6 +169,11 @@ public class Main extends Application {
 
         });
 
+        reportBtn.setOnAction(e->{
+        	root.setCenter(null);
+        	
+        });
+        
 		Application.setUserAgentStylesheet(new PrimerLight().getUserAgentStylesheet());
         scene.getStylesheets().add("style.css");
 //        primaryStage.setFullScreen(true);

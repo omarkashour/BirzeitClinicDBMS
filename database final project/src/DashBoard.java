@@ -209,9 +209,9 @@ public class DashBoard extends BorderPane {
 		chart.getData().add(femaleSeries);
 		chart.getData().add(maleSeries);
 		chart.getData().add(totalSeries);
-        chart.lookup(".chart-title").setStyle("-fx-font-size: 18px; "); // Set title color
-        xAxis.lookup(".axis-label").setStyle("-fx-font-size: 18px;"); // Set X-axis title font size
-        yAxis.lookup(".axis-label").setStyle("-fx-font-size: 18px;"); // Set X-axis title font size
+        chart.lookup(".chart-title").setStyle("-fx-font-size: 22px;    -fx-text-fill: white; "); // Set title color
+        xAxis.lookup(".axis-label").setStyle("-fx-font-size: 22px;    -fx-text-fill: white;"); // Set X-axis title font size
+        yAxis.lookup(".axis-label").setStyle("-fx-font-size: 22px;    -fx-text-fill: white;"); // Set X-axis title font size
         
         chart.setLegendSide(Side.BOTTOM);
 //        chart.setStyle("-fx-background-color: #FF6666;");

@@ -1,0 +1,218 @@
+
+/* Customize JavaFX controls */
+.root {
+    -color-primary: #FFEADD;
+    -color-secondary: #FCAEAE;
+    -color-tertiary: #FF8989;
+    -color-quaternary: #FF6666;
+}
+
+.button {
+	-fx-font-family: 'Product Sans';
+    -fx-background-color: -color-tertiary;
+    -fx-text-fill: white;
+    -fx-font-size: 14.0px;
+    -fx-background-radius: 20.0px; /* Rounded button */
+}
+
+.button:hover,
+.button:pressed,
+.button:focused {
+    -fx-background-color: -color-quaternary;
+}
+
+.label {
+  -fx-font-family: 'Product Sans'; 
+  -fx-text-fill: black;
+   -fx-font-size: 12.0px;
+    -fx-font-weight: bold;
+}
+
+.text-field {
+    -fx-background-color: -color-primary;
+    -fx-text-fill: black;
+    -fx-font-size: 14px; /* Increase the font size */
+    -fx-min-height: 32px; /* Increase the preferred height */
+}
+
+.text-area {
+    -fx-background-color: -color-primary;
+    -fx-text-fill: black;
+}
+
+.combo-box {
+    -fx-background-color: -color-primary;
+    -fx-text-fill: black;
+    -fx-pref-height: 22px; /* Increase the preferred height */
+    -fx-font-size: 14px; /* Set the desired font size */
+}
+.combo-box .list-cell {
+    -fx-font-size: 14px; /* Set the desired font size */
+}
+
+.check-box {
+    -fx-text-fill: -color-secondary;
+}
+
+.radio-button {
+    -fx-text-fill: -color-secondary;
+}
+
+.slider {
+    -fx-control-inner-background: -color-primary;
+    -fx-control-inner-background-alt: -color-secondary;
+    -fx-accent: -color-tertiary;
+}
+
+.progress-bar {
+    -fx-accent: -color-quaternary;
+}
+
+.separator {
+    -fx-background-color: -color-secondary;
+}
+
+/* Customize application-specific styles */
+.header {
+    -fx-background-color: -color-primary;
+    -fx-text-fill: white;
+    -fx-font-size: 24.0px;
+}
+
+.footer {
+    -fx-background-color: -color-quaternary;
+    -fx-text-fill: white;
+    -fx-font-size: 16.0px;
+}
+
+.list-view {
+    -fx-background-color: -color-primary;
+    -fx-text-fill: black;
+}
+
+.tree-view {
+    -fx-background-color: -color-primary;
+    -fx-text-fill: black;
+}
+
+.tooltip {
+    -fx-background-color: -color-secondary;
+    -fx-text-fill: white;
+}
+
+.dialog-pane {
+    -fx-background-color: -color-primary;
+    -fx-text-fill: black;
+}
+
+.menu-bar {
+    -fx-background-color: -color-primary;
+    -fx-text-fill: black;
+}
+
+.menu {
+    -fx-background-color: -color-primary;
+    -fx-text-fill: black;
+}
+
+.tab-pane {
+    -fx-background-color: -color-primary;
+    -fx-text-fill: black;
+}
+
+
+.button.navigation-button {
+    -fx-background-color: -color-tertiary;
+    -fx-text-fill: white;
+    -fx-font-size: 16.0px;
+    -fx-background-radius: 20.0px; /* Rounded button */
+    -fx-transition-duration: 0.2s; /* Transition duration for smooth animation */
+    -fx-transition-property: background-color; /* Apply transition only to background-color property */
+    -fx-min-width: 100.0px; /* Set the fixed width */
+    -fx-min-height: 40.0px; /* Set the fixed height */
+}
+
+.button.navigation-button:hover,
+.button.navigation-button:pressed,
+.button.navigation-button:focused {
+    -fx-background-color: -color-quaternary;
+}
+
+.button.navigation-button:hover {
+    -fx-background-color: -color-quaternary;
+    -fx-cursor: hand; /* Change cursor to hand on hover */
+}
+
+.button.navigation-button:pressed {
+    -fx-background-color: -color-quaternary;
+    -fx-scale-x: 0.95; /* Scale down button on press */
+    -fx-scale-y: 0.95;
+}
+
+.button.navigation-button:focused {
+    -fx-background-color: -color-quaternary;
+    -fx-scale-x: 1.05; /* Scale up button on focus */
+    -fx-scale-y: 1.05;
+}
+
+
+.table-row-cell:selected {
+    -fx-background-color: -color-quaternary;
+    -fx-text-fill: white;
+}
+
+
+.table-row-cell:selected {
+    -fx-background-color: -color-quaternary;
+    -fx-text-fill: white;
+}
+.table-view {
+    -fx-background-color: #f5f5f5;
+    -fx-font-size: 12px;
+
+
+}
+
+
+
+.table-view .column-header {
+    -fx-border-width:0 0 0.2 0.2px;
+    -fx-border-color: black;
+    -fx-alignment: center;
+    -fx-background-color: #ecdede;
+    -fx-border-right-color: black;
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+    -fx-padding: 5px 10px;
+}
+
+ .table-row-cell {
+    -fx-border-width: 0 0 0.2px 0;
+    -fx-border-color: black;
+    -fx-background-color: #ffffff;
+}
+
+.table-view .table-row-cell:selected {
+    -fx-background-color: -color-quaternary;
+}
+
+.table-view .table-cell {
+
+    -fx-alignment: center-left;
+    -fx-padding: 5px 10px;
+}
+
+.table-view .table-cell:empty {
+    -fx-background-color: transparent;
+}
+
+.table-view .filler {
+    -fx-background-color: transparent;
+}
+
+.chart-legend-item {
+    -fx-text-fill: black; /* Set the text color */
+        -fx-font-weight: normal;
+}
+
+
