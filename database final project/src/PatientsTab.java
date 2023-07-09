@@ -918,7 +918,7 @@ public class PatientsTab extends BorderPane {
 		try {
 			Statement st = Main.connection.createStatement();
 			ResultSet res = st
-					.executeQuery("select sum(b.amount_paid) from Patient p, billing_record b where p.patient_id = "
+					.executeQuery("select sum(b.amount_paid) from patient p, billing_record b where p.patient_id = "
 							+ patient_id + " and p.patient_id = b.patient_id;");
 			if (res.next()) {
 				return res.getDouble(1);
@@ -935,7 +935,7 @@ public class PatientsTab extends BorderPane {
 		try {
 			Statement st = Main.connection.createStatement();
 			ResultSet res = st
-					.executeQuery("select sum(b.total_amount) from Patient p, billing_record b where p.patient_id = "
+					.executeQuery("select sum(b.total_amount) from patient p, billing_record b where p.patient_id = "
 							+ patient_id + " and p.patient_id = b.patient_id;");
 			if (res.next()) {
 				return res.getDouble(1);

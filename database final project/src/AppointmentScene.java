@@ -144,7 +144,8 @@ public class AppointmentScene extends BorderPane {
 			}
 			myTable.getItems().clear();// Disable the confirm button
 			myTable.setItems(dataList);
-
+			ReportTab.refreshCards();
+			DashBoard.refreshDashBoard();
 		});
 
 		decline.setOnAction(event -> {
@@ -160,7 +161,8 @@ public class AppointmentScene extends BorderPane {
 			}
 			myTable.getItems().clear();// Disable the confirm button
 			myTable.setItems(dataList);
-
+			ReportTab.refreshCards();
+			DashBoard.refreshDashBoard();
 		});
 
 		buttonBox.getChildren().addAll(confirm, decline);

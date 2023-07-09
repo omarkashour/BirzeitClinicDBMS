@@ -148,30 +148,40 @@ public class Main extends Application {
         patientsBtn.setOnAction(e -> {
         	root.setCenter(null);
         	root.setCenter(patients);
+            scene.getStylesheets().clear();
+            scene.getStylesheets().add("style.css");
         });
 
         AppointmentScene appointment = new AppointmentScene();
         appointmentsBtn.setOnAction(e -> {
         	root.setCenter(null);
         	root.setCenter(appointment);
+            scene.getStylesheets().clear();
+            scene.getStylesheets().add("style3.css");
         });
         
         PrescriptionScene prescription = new PrescriptionScene();
         prescriptionsBtn.setOnAction(e->{
         	root.setCenter(null);
         	root.setCenter(prescription);
+            scene.getStylesheets().clear();
+            scene.getStylesheets().add("style.css");
         });
         
         PhysicianPage physicians = new PhysicianPage();
         physiciansBtn.setOnAction(e->{
         	root.setCenter(null);
         	root.setCenter(physicians);
+            scene.getStylesheets().clear();
+            scene.getStylesheets().add("style3.css");
 
         });
-
+        ReportTab reports = new ReportTab();
         reportBtn.setOnAction(e->{
         	root.setCenter(null);
-        	
+        	root.setCenter(reports);
+            scene.getStylesheets().clear();
+            scene.getStylesheets().add("style.css");
         });
         
 		Application.setUserAgentStylesheet(new PrimerLight().getUserAgentStylesheet());
